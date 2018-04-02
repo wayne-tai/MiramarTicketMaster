@@ -1,0 +1,47 @@
+PODS:
+  - Alamofire (4.5.1)
+  - RxAlamofire (3.0.3):
+    - RxAlamofire/Core (= 3.0.3)
+  - RxAlamofire/Core (3.0.3):
+    - Alamofire (~> 4.0)
+    - RxSwift (~> 3.0)
+  - RxCocoa (3.6.1):
+    - RxSwift (~> 3.6)
+  - RxSwift (3.6.1)
+  - SnapKit (3.2.0)
+  - SwifterSwift (3.2.0):
+    - SwifterSwift/AppKit (= 3.2.0)
+    - SwifterSwift/CoreGraphics (= 3.2.0)
+    - SwifterSwift/CoreLocation (= 3.2.0)
+    - SwifterSwift/Foundation (= 3.2.0)
+    - SwifterSwift/SwiftStdlib (= 3.2.0)
+    - SwifterSwift/UIKit (= 3.2.0)
+  - SwifterSwift/AppKit (3.2.0)
+  - SwifterSwift/CoreGraphics (3.2.0)
+  - SwifterSwift/CoreLocation (3.2.0)
+  - SwifterSwift/Foundation (3.2.0)
+  - SwifterSwift/SwiftStdlib (3.2.0)
+  - SwifterSwift/UIKit (3.2.0)
+  - SwiftyBeaver (1.4.4)
+
+DEPENDENCIES:
+  - Alamofire (~> 4.5.0)
+  - RxAlamofire (~> 3.0.3)
+  - RxCocoa (~> 3.6.1)
+  - RxSwift (~> 3.6.1)
+  - SnapKit (~> 3.2.0)
+  - SwifterSwift (~> 3.2.0)
+  - SwiftyBeaver (~> 1.4.0)
+
+SPEC CHECKSUMS:
+  Alamofire: 2d95912bf4c34f164fdfc335872e8c312acaea4a
+  RxAlamofire: 5eb39188c4917ad98127c0ecb4878a61b7517003
+  RxCocoa: 84a08739ab186248c7f31ce4ee92d6f8a947d690
+  RxSwift: f9de85ea20cd2f7716ee5409fc13523dc638e4e4
+  SnapKit: 1ca44df72cfa543218d177cb8aab029d10d86ea7
+  SwifterSwift: e009210d995737f54c1fbffc5a3f004c8467ab1d
+  SwiftyBeaver: 25bd76281f49ca989ec2e3cbde9af89c15bc1432
+
+PODFILE CHECKSUM: d37df96cc7c22ee53604068bb062809060379277
+
+COCOAPODS: 1.4.0
