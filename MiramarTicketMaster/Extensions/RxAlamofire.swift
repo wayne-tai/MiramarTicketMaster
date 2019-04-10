@@ -119,31 +119,7 @@ extension Reactive where Base == DataResponse<Data> {
 				}
 				/// Error handle for other status code
 				else {
-					
-					do {
-						// Retrieve error info from server
-						let err = try CBError.decode(from: data)
-						
-						// Retrieve error code from server response reason
-						// Typically, it won't be nil
-						// Otherwise, something is goning wrong
-						guard case let .apiError(.errorPayload(errorCode, requestId)) = err else {
-							throw unknownError()
-						}
-						
-						// Submit the error
-						observer.onError(apiRequestFailedError(statusCode, errorCode: errorCode, requestId: requestId))
-						
-					} catch {
-						/// Internal error due to JSON decodeing failed
-						if case let CBError.internalError(internalError) = error, case .JSONDecodingFailed = internalError {
-							observer.onError(error)
-						}
-						else {
-							/// Network error due to unable to reach our server
-							observer.onError(requestFailedError(url, statusCode: statusCode))
-						}
-					}
+					observer.onError(requestFailedError(url, statusCode: statusCode))
 				}
 				
 			case .failure(let error):

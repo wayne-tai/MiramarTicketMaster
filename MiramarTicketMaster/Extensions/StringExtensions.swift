@@ -9,7 +9,15 @@
 import Foundation
 import SwifterSwift
 
-extension String {	
+extension String {
+	
+	var date: Date? {
+		let formatter = DateFormatter()
+		formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
+		formatter.timeZone = .current
+		return formatter.date(from: self)
+	}
+	
 	var localized: String {
 		return NSLocalizedString(self, comment: "")
 	}

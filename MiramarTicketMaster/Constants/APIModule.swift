@@ -10,7 +10,7 @@ import Foundation
 
 /// Represent the router type by API module
 internal enum APIModule: String {
-	case service	= "/MiramarApp/Service"
+	case console = "/MiramarDazhiVistaConsole/api"
 }
 
 extension APIModule {

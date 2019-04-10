@@ -18,7 +18,7 @@ internal class API {
 	
 	// Singleton
 	static let shared: API = {
-		return API(with: CobinhoodSessionManager.shared)
+		return API(with: MSessionManager.shared)
 	}()
 	
 	init(with sessionManager: Requestable) {
@@ -34,7 +34,7 @@ internal class API {
 	// MARK: Send Request
 	
 	internal static func request(_ method:		HTTPMethod,
-								 endpoint:		String = CobinhoodSessionManager.baseURLString,
+								 endpoint:		String = MSessionManager.baseURLString,
 	                             urlString:		String,
 	                             parameters:	Parameters? = nil,
 	                             encoding:		ParameterEncoding = URLEncoding.default,
@@ -56,8 +56,6 @@ internal class API {
 	
 }
 
-typealias DataResult = Result<Data>
-typealias EmptyResult = Result<Swift.Void>
 
 // MARK: -
 // MARK: Parameter Enums
