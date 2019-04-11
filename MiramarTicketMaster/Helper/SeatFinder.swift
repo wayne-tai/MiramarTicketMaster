@@ -18,7 +18,7 @@ class SeatFinder {
         self.targetTicketQuantity = targetTicketQuantity
     }
     
-    func seats(from seatPlan: SeatPlan) -> [SeatLayoutData.Area.Row.Seat] {
+    func seats(from seatPlan: SeatPlan) -> [SeatPlan.SeatLayoutData.Area.Row.Seat] {
         log.debug("Request for session seat data success!")
         log.debug("Get areas count \(seatPlan.areas.count)")
         
@@ -29,7 +29,7 @@ class SeatFinder {
             
         log.debug("Get rows count \(area.rows.count)")
         
-        var selectedSeats = [SeatLayoutData.Area.Row.Seat]()
+        var selectedSeats = [SeatPlan.SeatLayoutData.Area.Row.Seat]()
         var selectedSeatsScores: Int = 0
         let maxSeatPriorityScore: Int = Int(round(Double(area.rows.reduce(0, { max($0, $1.seats.count) })) / 2.0))
             
@@ -39,7 +39,7 @@ class SeatFinder {
                 continue
             }
             
-            var currentPickedSeats = [SeatLayoutData.Area.Row.Seat]()
+            var currentPickedSeats = [SeatPlan.SeatLayoutData.Area.Row.Seat]()
             let seats = row.seats.filter{ targetSeat.range.contains($0.id.intValue) }
             seats.forEach { (seat) in
                 let seatId = seat.id.intValue

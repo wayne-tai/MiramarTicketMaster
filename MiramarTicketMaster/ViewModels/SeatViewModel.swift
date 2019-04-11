@@ -53,6 +53,7 @@ class SeatViewModel: ViewModel {
                 guard let self = self else { return }
                 switch event {
                 case .success(let seatPlan):
+					guard seatPlan.result == 1 else { return }
                     self.logger?.log("Get seat plan success!\n")
                     self.logger?.log("============================\n\n")
                     self.timer?.cancel()

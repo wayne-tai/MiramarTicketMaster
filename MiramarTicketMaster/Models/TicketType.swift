@@ -16,6 +16,10 @@ struct TicketType: Decodable {
         case result = "Result"
         case data = "Data"
     }
+	
+	var tickets: [Ticket] {
+		return data.tickets
+	}
 }
 
 extension TicketType {
@@ -43,5 +47,14 @@ extension TicketType {
             case description = "Description"
             case priceInCents = "PriceInCents"
         }
+		
+		func toOrderTicketType(with quantity: Int) -> Order.TicketType {
+			let orderTicketType = Order.TicketType()
+			orderTicketType.loyaltyRecognitionSequence = String(loyaltyRecognitionSequence)
+			orderTicketType.qty = String(quantity)
+			orderTicketType.priceInCents = String(priceInCents)
+			orderTicketType.ticketTypeCode = ticketTypeCode
+			return orderTicketType
+		}
     }
 }

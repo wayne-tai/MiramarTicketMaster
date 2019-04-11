@@ -27,7 +27,7 @@ class MovieViewModel: ViewModel {
 	var timer: DispatchSourceTimer?
 	let timerQueue: DispatchQueue = DispatchQueue(label: "idv.wayne.miramar.ticket.master.movie.timer", attributes: .concurrent)
 	
-	init(token: String, sessionId: String) {
+	init(token: String, sessionId: String = Config().sessionId) {
 		self.authToken = token
 		self.sessionId = sessionId
 	}
@@ -53,6 +53,7 @@ class MovieViewModel: ViewModel {
 				guard let self = self else { return }
 				switch event {
 				case .success(let movieSession):
+					guard movieSession.result == 1 else { return }
 					self.logger?.log("Get movie session success!\n")
 					self.logger?.log("============================\n\n")
 					self.timer?.cancel()

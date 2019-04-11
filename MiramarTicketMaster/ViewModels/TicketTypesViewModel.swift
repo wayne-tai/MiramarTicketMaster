@@ -56,6 +56,7 @@ class TicketTypesViewModel: ViewModel {
                 guard let self = self else { return }
                 switch event {
                 case .success(let ticketTypes):
+					guard ticketTypes.result == 1 else { return }
                     self.logger?.log("Get ticket types success!\n")
                     self.logger?.log("============================\n\n")
                     self.timer?.cancel()

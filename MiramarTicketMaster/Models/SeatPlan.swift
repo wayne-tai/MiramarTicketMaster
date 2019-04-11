@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct SeatPlan: Decodable {
+class SeatPlan: Decodable {
 	let result: Int
 	let data: Data
 	
@@ -25,7 +25,7 @@ struct SeatPlan: Decodable {
 
 extension SeatPlan {
 	
-	struct Data: Decodable {
+	class Data: Decodable {
 		let seatLayoutData: SeatLayoutData
 		
 		enum CodingKeys: String, CodingKey {
@@ -34,28 +34,33 @@ extension SeatPlan {
 	}
 }
 
-struct SeatLayoutData: Decodable {
-	let areas: [Area]
-	
-	enum CodingKeys: String, CodingKey {
-		case areas = "Areas"
+extension SeatPlan {
+
+	class SeatLayoutData: Decodable {
+		let areas: [Area]
+		
+		enum CodingKeys: String, CodingKey {
+			case areas = "Areas"
+		}
 	}
 }
 
-extension SeatLayoutData {
+extension SeatPlan.SeatLayoutData {
 	
-	struct Area: Decodable {
+	class Area: Decodable {
+		let areaCategoryCode: String
 		let rows: [Row]
 		
 		enum CodingKeys: String, CodingKey {
+			case areaCategoryCode = "AreaCategoryCode"
 			case rows = "Rows"
 		}
 	}
 }
 
-extension SeatLayoutData.Area {
+extension SeatPlan.SeatLayoutData.Area {
 	
-	struct Row: Decodable {
+	class Row: Decodable {
 		let physicalName: String?
 		let seats: [Seat]
 		
@@ -66,7 +71,7 @@ extension SeatLayoutData.Area {
 	}
 }
 
-extension SeatLayoutData.Area.Row {
+extension SeatPlan.SeatLayoutData.Area.Row {
 	
 	class Seat: Decodable {
 		let id: String
@@ -94,10 +99,19 @@ extension SeatLayoutData.Area.Row {
         var seatStatus: Status {
             return Status(rawValue: status)
         }
+		
+		func toSelectedSeat(with areaCategoryCode: String) -> Order.SelectedSeat {
+			let selectedSeat = Order.SelectedSeat()
+			selectedSeat.areaCategoryCode = areaCategoryCode
+			selectedSeat.areaNumber = String(position.areaNumber)
+			selectedSeat.columnIndex = String(position.columnIndex)
+			selectedSeat.rowIndex = String(position.rowIndex)
+			return selectedSeat
+		}
 	}
 }
 
-extension SeatLayoutData.Area.Row.Seat {
+extension SeatPlan.SeatLayoutData.Area.Row.Seat {
     
     enum Status: Int {
         case empty = 0

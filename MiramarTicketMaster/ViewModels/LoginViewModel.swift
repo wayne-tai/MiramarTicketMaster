@@ -24,7 +24,7 @@ class LoginViewModel: ViewModel {
 	
 	let network = MiramarService()
 	
-	init(sessionId: String) {
+	init(sessionId: String = Config().sessionId) {
 		self.sessionId = sessionId
 	}
 	
@@ -43,6 +43,7 @@ class LoginViewModel: ViewModel {
 				guard let self = self else { return }
 				switch event {
 				case .success(let authToken):
+					guard authToken.result == 1 else { return }
 					self.logger?.log("Get auth token success!\n")
 					self.logger?.log("============================\n\n")
 					self.authToken = authToken.token
@@ -68,6 +69,7 @@ class LoginViewModel: ViewModel {
 				guard let self = self else { return }
 				switch event {
 				case .success(let member):
+					guard member.result == 1 else { return }
 					self.logger?.log("Login success!\n")
 					self.logger?.log("============================\n\n")
 					self.delegate?.didLoginCompleted(with: self.authToken, member: member)

@@ -69,4 +69,24 @@ class MiramarService: NetworkService {
         return request(.post, urlString: path, parameters: params, headers: headers)
             .map { try $0.decode() }
     }
+	
+	func orderTicker(with token: String, order: Order) -> Single<OrderTicket> {
+		let path = APIModule.console + "/OrderTicket/Post"
+		let headers: HTTPHeaders = [
+			"Authorization": "MAuth \(token)"
+		]
+		let params = order.dictionaryValue
+		return request(.post, urlString: path, parameters: params, encoding: .json, headers: headers)
+			.map { try $0.decode() }
+	}
+	
+	func orderPayment(with token: String, payment: Payment) -> Single<OrderPayment> {
+		let path = APIModule.console + "/OrderPayment/Post"
+		let headers: HTTPHeaders = [
+			"Authorization": "MAuth \(token)"
+		]
+		let params = payment.dictionaryValue
+		return request(.post, urlString: path, parameters: params, encoding: .json, headers: headers)
+			.map { try $0.decode() }
+	}
 }
