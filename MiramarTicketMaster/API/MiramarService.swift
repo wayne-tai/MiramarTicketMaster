@@ -55,4 +55,18 @@ class MiramarService: NetworkService {
 		return request(.post, urlString: path, parameters: params, headers: headers)
 			.map { try $0.decode() }
 	}
+    
+    func getTicketTypes(with token: String, memberId: String, movieSessionId: String) -> Single<TicketType> {
+        let path = APIModule.console + "/TicketType/Post"
+        let headers: HTTPHeaders = [
+            "Authorization": "MAuth \(token)"
+        ]
+        let params: Parameters = [
+            "CinemaId": "1001",
+            "MemberId": memberId,
+            "SessionId": movieSessionId
+        ]
+        return request(.post, urlString: path, parameters: params, headers: headers)
+            .map { try $0.decode() }
+    }
 }

@@ -53,6 +53,9 @@
 		B0C64A3A225F29BA00B4F921 /* SeatViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0C64A39225F29BA00B4F921 /* SeatViewModel.swift */; };
 		B0C64A3D225F327900B4F921 /* MovieSessionFinder.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0C64A3C225F327900B4F921 /* MovieSessionFinder.swift */; };
 		B0C64A3F225F33A000B4F921 /* SeatFinder.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0C64A3E225F33A000B4F921 /* SeatFinder.swift */; };
+		B0C64A45225F42CA00B4F921 /* TicketType.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0C64A44225F42C900B4F921 /* TicketType.swift */; };
+		B0C64A47225F455700B4F921 /* TicketTypesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0C64A46225F455700B4F921 /* TicketTypesViewModel.swift */; };
+		B0C64A49225F4F0600B4F921 /* SeatAndTicketViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0C64A48225F4F0600B4F921 /* SeatAndTicketViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -116,6 +119,9 @@
 		B0C64A39225F29BA00B4F921 /* SeatViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeatViewModel.swift; sourceTree = "<group>"; };
 		B0C64A3C225F327900B4F921 /* MovieSessionFinder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieSessionFinder.swift; sourceTree = "<group>"; };
 		B0C64A3E225F33A000B4F921 /* SeatFinder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeatFinder.swift; sourceTree = "<group>"; };
+		B0C64A44225F42C900B4F921 /* TicketType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TicketType.swift; sourceTree = "<group>"; };
+		B0C64A46225F455700B4F921 /* TicketTypesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicketTypesViewModel.swift; sourceTree = "<group>"; };
+		B0C64A48225F4F0600B4F921 /* SeatAndTicketViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeatAndTicketViewModel.swift; sourceTree = "<group>"; };
 		CE65D4B803D56EBAFBB8B856 /* Pods_target_MiramarTicketMaster.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_target_MiramarTicketMaster.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E4E2117115D5F3F66A8776FB /* Pods-target-MiramarTicketMaster.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-target-MiramarTicketMaster.release.xcconfig"; path = "Pods/Target Support Files/Pods-target-MiramarTicketMaster/Pods-target-MiramarTicketMaster.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -146,6 +152,8 @@
 				B08057B9225E478A0003D59B /* LoginViewModel.swift */,
 				B08057BF225E53520003D59B /* MovieViewModel.swift */,
 				B0C64A39225F29BA00B4F921 /* SeatViewModel.swift */,
+				B0C64A46225F455700B4F921 /* TicketTypesViewModel.swift */,
+				B0C64A48225F4F0600B4F921 /* SeatAndTicketViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -166,6 +174,7 @@
 				B08057B6225E3C0A0003D59B /* Member.swift */,
 				B08057BD225E4CD40003D59B /* MovieSession.swift */,
 				B08057C1225E57F20003D59B /* SeatPlan.swift */,
+				B0C64A44225F42C900B4F921 /* TicketType.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -462,6 +471,7 @@
 				B0AEEFC6206945D600F743AF /* UIButtonExtensions.swift in Sources */,
 				B0C64A3F225F33A000B4F921 /* SeatFinder.swift in Sources */,
 				B0AEEFB1206945BF00F743AF /* MSessionManager.swift in Sources */,
+				B0C64A45225F42CA00B4F921 /* TicketType.swift in Sources */,
 				B0AEEFCD206945D600F743AF /* NSMutableAttributedStringExtensions.swift in Sources */,
 				B0AEEFD5206945D600F743AF /* UIResponderExtension.swift in Sources */,
 				B0AEEFAD206945A500F743AF /* CBErrorCode.swift in Sources */,
@@ -487,6 +497,7 @@
 				B08057B5225E39530003D59B /* SingleExtensions.swift in Sources */,
 				B0AEEFCB206945D600F743AF /* DataExtensions.swift in Sources */,
 				B0AEEFC9206945D600F743AF /* StringExtensions.swift in Sources */,
+				B0C64A49225F4F0600B4F921 /* SeatAndTicketViewModel.swift in Sources */,
 				B08057C2225E57F20003D59B /* SeatPlan.swift in Sources */,
 				B0AEEFCC206945D600F743AF /* UIColorExtensions.swift in Sources */,
 				B08057B7225E3C0A0003D59B /* Member.swift in Sources */,
@@ -498,6 +509,7 @@
 				B08057C0225E53520003D59B /* MovieViewModel.swift in Sources */,
 				B08057AF225E34EA0003D59B /* NetworkService.swift in Sources */,
 				B0AEEFAE206945A500F743AF /* CBError.swift in Sources */,
+				B0C64A47225F455700B4F921 /* TicketTypesViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

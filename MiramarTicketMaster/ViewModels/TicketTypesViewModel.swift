@@ -1,5 +1,5 @@
 //
-//  SeatViewModel.swift
+//  TicketTypesViewModel.swift
 //  MiramarTicketMaster
 //
 //  Created by Wayne on 2019/4/11.
@@ -7,28 +7,31 @@
 //
 
 import Foundation
+import RxSwift
 
-protocol SeatViewModelDelegate: AnyObject {
-    func didGetSeatPlan(seatPlan: SeatPlan, movieSessionId: String)
+protocol TicketTypesViewModelDelegate: AnyObject {
+    func didGetTicketType(ticketType: TicketType)
 }
 
-class SeatViewModel: ViewModel {
+class TicketTypesViewModel: ViewModel {
     
     weak var logger: ViewModelLogger?
     
-    weak var delegate: SeatViewModelDelegate?
+    weak var delegate: TicketTypesViewModelDelegate?
     
     let movieSessionId: String
     let authToken: String
+    let memberId: String
     
     let network = MiramarService()
     
     let repeatInterval: DispatchTimeInterval = .seconds(2)
     var timer: DispatchSourceTimer?
-    let timerQueue: DispatchQueue = DispatchQueue(label: "idv.wayne.miramar.ticket.master.seat.timer", attributes: .concurrent)
+    let timerQueue: DispatchQueue = DispatchQueue(label: "idv.wayne.miramar.ticket.master.ticket.timer", attributes: .concurrent)
     
-    init(token: String, movieSessionId: String) {
+    init(token: String, memberId: String, movieSessionId: String) {
         self.authToken = token
+        self.memberId = memberId
         self.movieSessionId = movieSessionId
     }
     
@@ -40,27 +43,27 @@ class SeatViewModel: ViewModel {
         
         timer?.setEventHandler { [weak self] in
             guard let self = self else { return }
-            self.getSeatPlan()
+            self.getTicketTypes()
         }
         
         timer?.resume()
     }
     
-    func getSeatPlan() {
-        logger?.log("Get seat plan...\n")
-        _ = network.getSeatPlan(with: authToken, movieSessionId: movieSessionId)
+    func getTicketTypes() {
+        logger?.log("Get ticket types...\n")
+        _ = network.getTicketTypes(with: authToken, memberId: memberId, movieSessionId: movieSessionId)
             .subscribe { [weak self] (event) in
                 guard let self = self else { return }
                 switch event {
-                case .success(let seatPlan):
-                    self.logger?.log("Get seat plan success!\n")
+                case .success(let ticketTypes):
+                    self.logger?.log("Get ticket types success!\n")
                     self.logger?.log("============================\n\n")
                     self.timer?.cancel()
                     self.timer = nil
-                    self.delegate?.didGetSeatPlan(seatPlan: seatPlan, movieSessionId: self.movieSessionId)
+                    self.delegate?.didGetTicketType(ticketType: ticketTypes)
                     
                 case .error(let error):
-                    self.logger?.log("Get seat plan failed...\n\n")
+                    self.logger?.log("Get ticket types failed...\n\n")
                     self.logger?.log("Error \(error)\n")
                 }
         }

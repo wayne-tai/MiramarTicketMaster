@@ -68,7 +68,7 @@ class ViewController: UIViewController {
 	
 	let network = MiramarService()
 	
-	let sessionId = "F79VC9DCH8X0XZQXO8MVQFCBLYQQFZW8"
+	let sessionId = "DLS8JS79YUB6JLI3867ZSDAUHSA0KIOY"
 	
 	var viewModel: ViewModel = EmptyViewModel()
 	
@@ -862,53 +862,13 @@ extension ViewController: MovieViewModelDelegate {
 	func didGetMovieSession(movieSession: MovieSession) {
 		self.movieSession = movieSession
         
-		log("Trying to get the best movie session...\n")
-        var optionalSession: MovieSession.ShowDate.Movie.Screen.Session?
-        while optionalSession == nil {
-            guard let targetDate = targetMovieDateTimes.first else { return }
-            let finder = MovieSessionFinder(targetMovieName: targetMovieName, tolerance: 14400.0)
-            optionalSession = finder.session(from: &(self.movieSession!), forTargetDate: targetDate)
-            
-            if let session = optionalSession {
-                log("Get the best movie session \(session.sessionId), at time \(session.showtime)\n")
-                log("============================\n\n")
-                break
-            } else {
-                targetMovieDateTimes = Array(targetMovieDateTimes.dropFirst())
-            }
-        }
-        
-        guard let session = optionalSession else {
-            log("No movie session could be choose\n")
-            return
-        }
-
-        let viewModel = SeatViewModel(token: authToken, movieSessionId: session.sessionId)
-        viewModel.delegate = self
+        guard let memberId = member?.memberId else { return }
+        let viewModel = SeatAndTicketViewModel(token: authToken, memberId: memberId, movieSession: movieSession)
         viewModel.logger = self
+        viewModel.targetMovieDateTimes = targetMovieDateTimes
+        viewModel.targetMovieName = targetMovieName
+        viewModel.targetSeats = targetSeats
+        viewModel.targetTicketQuantity = targetTicketQuantity
         self.viewModel = viewModel
 	}
-}
-
-extension ViewController: SeatViewModelDelegate {
-    func didGetSeatPlan(seatPlan: SeatPlan) {
-        self.seatPlan = seatPlan
-        
-        log("Trying to get the best seats...\n")
-        let finder = SeatFinder(targetSeats: targetSeats, targetTicketQuantity: targetTicketQuantity)
-        let seats = finder.seats(from: seatPlan)
-        
-        if !seats.isEmpty {
-            log("Get the best seats \(seats)\n")
-            log("============================\n\n")
-            
-            
-            
-        } else {
-            log("No seats could be found in current movie session...")
-            didGetMovieSession(movieSession: self.movieSession!)
-        }
-    }
-    
-    
 }
