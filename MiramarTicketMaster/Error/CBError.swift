@@ -291,24 +291,6 @@ extension CBError: ErrorStringConvertible {
 }
 
 // MARK: -
-// MARK: Decodable
-
-extension CBError: CBDecodableModel {
-	
-	init(from decoder: Decoder) throws {
-		let container = try decoder.container(keyedBy: SharedKeys.self)
-		let payload = try container.decode(CBErrorApiReasonPayload.self, forKey: .error)
-		let requestId = try container.decodeIfPresent(String.self, forKey: .requestId)
-		
-		self = errorPayload(payload.errorCode, requestId: requestId)
-	}
-	
-	internal static func decode(from data: Data) throws -> CBError {
-		return try wrapDecodable { try JSONDecoder().decode(self, from: data) }
-	}
-}
-
-// MARK: -
 // MARK: CBErrorApiReasonPayload
 
 struct CBErrorApiReasonPayload: Codable {

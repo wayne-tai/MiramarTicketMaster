@@ -8,32 +8,53 @@
 
 import Foundation
 
-struct TicketType: CBDecodableModel {
-    let ticketTypeCode: String
-    let ticketTypeDescriptEn: String
-    let ticketTypeDescriptCht: String
-    let ticketPrice: Int
-    
-    enum ObjectKeys: String, CodingKey {
-        case ticketTypeList = "TicketTypeList"
-    }
+struct TicketType: Decodable {
+    let result: Int
+    let data: Data
     
     enum CodingKeys: String, CodingKey {
-        case ticketTypeCode = "TicketTypeCode"
-        case ticketTypeDescriptEn = "TicketTypeDescriptEn"
-        case ticketTypeDescriptCht = "TicketTypeDescriptCht"
-        case ticketPrice = "TicketPrice"
+        case result = "Result"
+        case data = "Data"
     }
+	
+	var tickets: [Ticket] {
+		return data.tickets
+	}
+}
+
+extension TicketType {
     
-    init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        ticketTypeCode = try container.decode(String.self, forKey: .ticketTypeCode)
-        ticketTypeDescriptEn = try container.decode(String.self, forKey: .ticketTypeDescriptEn)
-        ticketTypeDescriptCht = try container.decode(String.self, forKey: .ticketTypeDescriptCht)
-        ticketPrice = try container.decode(Int.self, forKey: .ticketPrice)
+    struct Data: Decodable {
+        let tickets: [Ticket]
+        
+        enum CodingKeys: String, CodingKey {
+            case tickets = "Tickets"
+        }
     }
+}
+
+extension TicketType {
     
-    internal static func ticketTypes(from data: Data) throws -> [TicketType] {
-        return try CBDecodableModels<TicketType>.decodeInResultObject(from: data, objectKey: ObjectKeys.ticketTypeList.stringValue).models
+    struct Ticket: Decodable {
+        let ticketTypeCode: String
+        let loyaltyRecognitionSequence: Int
+        let description: String
+        let priceInCents: Int
+        
+        enum CodingKeys: String, CodingKey {
+            case ticketTypeCode = "TicketTypeCode"
+            case loyaltyRecognitionSequence = "LoyaltyRecognitionSequence"
+            case description = "Description"
+            case priceInCents = "PriceInCents"
+        }
+		
+		func toOrderTicketType(with quantity: Int) -> Order.TicketType {
+			let orderTicketType = Order.TicketType()
+			orderTicketType.loyaltyRecognitionSequence = String(loyaltyRecognitionSequence)
+			orderTicketType.qty = String(quantity)
+			orderTicketType.priceInCents = String(priceInCents)
+			orderTicketType.ticketTypeCode = ticketTypeCode
+			return orderTicketType
+		}
     }
 }

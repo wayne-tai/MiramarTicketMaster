@@ -8,14 +8,26 @@
 
 /* Begin PBXBuildFile section */
 		A59C8AA72DFFD5E260A8644E /* Pods_target_MiramarTicketMaster.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE65D4B803D56EBAFBB8B856 /* Pods_target_MiramarTicketMaster.framework */; };
-		B08D2971206F3B4800E3F5BA /* OrderConfirm.swift in Sources */ = {isa = PBXBuildFile; fileRef = B08D2970206F3B4800E3F5BA /* OrderConfirm.swift */; };
-		B08D2973206F417300E3F5BA /* OrderResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = B08D2972206F417300E3F5BA /* OrderResult.swift */; };
-		B0AEEFA22069453900F743AF /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0AEEF9C2069453800F743AF /* API.swift */; };
-		B0AEEFA82069456500F743AF /* BaseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0AEEFA62069456400F743AF /* BaseModel.swift */; };
-		B0AEEFA92069456500F743AF /* ThreadSafeElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0AEEFA72069456500F743AF /* ThreadSafeElement.swift */; };
+		B08057AF225E34EA0003D59B /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B08057AE225E34EA0003D59B /* NetworkService.swift */; };
+		B08057B1225E35EB0003D59B /* MiramarService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B08057B0225E35EB0003D59B /* MiramarService.swift */; };
+		B08057B3225E37540003D59B /* AuthToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = B08057B2225E37540003D59B /* AuthToken.swift */; };
+		B08057B5225E39530003D59B /* SingleExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B08057B4225E39530003D59B /* SingleExtensions.swift */; };
+		B08057B7225E3C0A0003D59B /* Member.swift in Sources */ = {isa = PBXBuildFile; fileRef = B08057B6225E3C0A0003D59B /* Member.swift */; };
+		B08057BA225E478A0003D59B /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B08057B9225E478A0003D59B /* LoginViewModel.swift */; };
+		B08057BC225E479C0003D59B /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B08057BB225E479C0003D59B /* ViewModel.swift */; };
+		B08057BE225E4CD40003D59B /* MovieSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = B08057BD225E4CD40003D59B /* MovieSession.swift */; };
+		B08057C0225E53520003D59B /* MovieViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B08057BF225E53520003D59B /* MovieViewModel.swift */; };
+		B08057C2225E57F20003D59B /* SeatPlan.swift in Sources */ = {isa = PBXBuildFile; fileRef = B08057C1225E57F20003D59B /* SeatPlan.swift */; };
+		B08057C4225F826D0003D59B /* TicketFinder.swift in Sources */ = {isa = PBXBuildFile; fileRef = B08057C3225F826D0003D59B /* TicketFinder.swift */; };
+		B08057C6225F83680003D59B /* Order.swift in Sources */ = {isa = PBXBuildFile; fileRef = B08057C5225F83680003D59B /* Order.swift */; };
+		B08057C8225F92C30003D59B /* OrderTicket.swift in Sources */ = {isa = PBXBuildFile; fileRef = B08057C7225F92C30003D59B /* OrderTicket.swift */; };
+		B08057CA225F95740003D59B /* OrderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B08057C9225F95740003D59B /* OrderViewModel.swift */; };
+		B08057CC225F971F0003D59B /* Payment.swift in Sources */ = {isa = PBXBuildFile; fileRef = B08057CB225F971F0003D59B /* Payment.swift */; };
+		B08057CE225F9D0F0003D59B /* OrderPayment.swift in Sources */ = {isa = PBXBuildFile; fileRef = B08057CD225F9D0F0003D59B /* OrderPayment.swift */; };
+		B08057D0225F9EFD0003D59B /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = B08057CF225F9EFD0003D59B /* Config.swift */; };
 		B0AEEFAD206945A500F743AF /* CBErrorCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0AEEFAB206945A500F743AF /* CBErrorCode.swift */; };
 		B0AEEFAE206945A500F743AF /* CBError.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0AEEFAC206945A500F743AF /* CBError.swift */; };
-		B0AEEFB1206945BF00F743AF /* CobinhoodSessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0AEEFB0206945BF00F743AF /* CobinhoodSessionManager.swift */; };
+		B0AEEFB1206945BF00F743AF /* MSessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0AEEFB0206945BF00F743AF /* MSessionManager.swift */; };
 		B0AEEFC5206945D600F743AF /* UITextFieldExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0AEEFB3206945D100F743AF /* UITextFieldExtensions.swift */; };
 		B0AEEFC6206945D600F743AF /* UIButtonExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0AEEFB4206945D200F743AF /* UIButtonExtensions.swift */; };
 		B0AEEFC7206945D600F743AF /* UIViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0AEEFB5206945D200F743AF /* UIViewExtensions.swift */; };
@@ -39,17 +51,18 @@
 		B0AEEFE7206945ED00F743AF /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0AEEFDE206945ED00F743AF /* Network.swift */; };
 		B0AEEFE9206945ED00F743AF /* Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0AEEFE0206945ED00F743AF /* Notification.swift */; };
 		B0AEEFEC206947D300F743AF /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0AEEFEB206947D300F743AF /* Utils.swift */; };
-		B0AEEFEE2069515600F743AF /* ServiceModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0AEEFED2069515600F743AF /* ServiceModule.swift */; };
-		B0AEEFF0206954BB00F743AF /* Key.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0AEEFEF206954BB00F743AF /* Key.swift */; };
-		B0AEEFF2206A9BC000F743AF /* ShowTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0AEEFF1206A9BC000F743AF /* ShowTime.swift */; };
-		B0AEEFF4206BC66C00F743AF /* TicketType.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0AEEFF3206BC66C00F743AF /* TicketType.swift */; };
-		B0AEEFF6206BE82E00F743AF /* Seats.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0AEEFF5206BE82E00F743AF /* Seats.swift */; };
 		B0BBFED120693E1800F59FCC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0BBFED020693E1800F59FCC /* AppDelegate.swift */; };
 		B0BBFED320693E1800F59FCC /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0BBFED220693E1800F59FCC /* ViewController.swift */; };
 		B0BBFED620693E1800F59FCC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B0BBFED420693E1800F59FCC /* Main.storyboard */; };
 		B0BBFED820693E1800F59FCC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B0BBFED720693E1800F59FCC /* Assets.xcassets */; };
 		B0BBFEDB20693E1800F59FCC /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B0BBFED920693E1800F59FCC /* LaunchScreen.storyboard */; };
 		B0BBFEE620693E1800F59FCC /* MiramarTicketMasterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0BBFEE520693E1800F59FCC /* MiramarTicketMasterTests.swift */; };
+		B0C64A3A225F29BA00B4F921 /* SeatViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0C64A39225F29BA00B4F921 /* SeatViewModel.swift */; };
+		B0C64A3D225F327900B4F921 /* MovieSessionFinder.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0C64A3C225F327900B4F921 /* MovieSessionFinder.swift */; };
+		B0C64A3F225F33A000B4F921 /* SeatFinder.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0C64A3E225F33A000B4F921 /* SeatFinder.swift */; };
+		B0C64A45225F42CA00B4F921 /* TicketType.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0C64A44225F42C900B4F921 /* TicketType.swift */; };
+		B0C64A47225F455700B4F921 /* TicketTypesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0C64A46225F455700B4F921 /* TicketTypesViewModel.swift */; };
+		B0C64A49225F4F0600B4F921 /* SeatAndTicketViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0C64A48225F4F0600B4F921 /* SeatAndTicketViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -64,14 +77,26 @@
 
 /* Begin PBXFileReference section */
 		136BC625F58A0109F6D0C1BC /* Pods-target-MiramarTicketMaster.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-target-MiramarTicketMaster.debug.xcconfig"; path = "Pods/Target Support Files/Pods-target-MiramarTicketMaster/Pods-target-MiramarTicketMaster.debug.xcconfig"; sourceTree = "<group>"; };
-		B08D2970206F3B4800E3F5BA /* OrderConfirm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderConfirm.swift; sourceTree = "<group>"; };
-		B08D2972206F417300E3F5BA /* OrderResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderResult.swift; sourceTree = "<group>"; };
-		B0AEEF9C2069453800F743AF /* API.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
-		B0AEEFA62069456400F743AF /* BaseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = BaseModel.swift; path = ../Models/BaseModel.swift; sourceTree = "<group>"; };
-		B0AEEFA72069456500F743AF /* ThreadSafeElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ThreadSafeElement.swift; path = ../Models/ThreadSafeElement.swift; sourceTree = "<group>"; };
+		B08057AE225E34EA0003D59B /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
+		B08057B0225E35EB0003D59B /* MiramarService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiramarService.swift; sourceTree = "<group>"; };
+		B08057B2225E37540003D59B /* AuthToken.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthToken.swift; sourceTree = "<group>"; };
+		B08057B4225E39530003D59B /* SingleExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleExtensions.swift; sourceTree = "<group>"; };
+		B08057B6225E3C0A0003D59B /* Member.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Member.swift; sourceTree = "<group>"; };
+		B08057B9225E478A0003D59B /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
+		B08057BB225E479C0003D59B /* ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
+		B08057BD225E4CD40003D59B /* MovieSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieSession.swift; sourceTree = "<group>"; };
+		B08057BF225E53520003D59B /* MovieViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieViewModel.swift; sourceTree = "<group>"; };
+		B08057C1225E57F20003D59B /* SeatPlan.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeatPlan.swift; sourceTree = "<group>"; };
+		B08057C3225F826D0003D59B /* TicketFinder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicketFinder.swift; sourceTree = "<group>"; };
+		B08057C5225F83680003D59B /* Order.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Order.swift; sourceTree = "<group>"; };
+		B08057C7225F92C30003D59B /* OrderTicket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderTicket.swift; sourceTree = "<group>"; };
+		B08057C9225F95740003D59B /* OrderViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderViewModel.swift; sourceTree = "<group>"; };
+		B08057CB225F971F0003D59B /* Payment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Payment.swift; sourceTree = "<group>"; };
+		B08057CD225F9D0F0003D59B /* OrderPayment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderPayment.swift; sourceTree = "<group>"; };
+		B08057CF225F9EFD0003D59B /* Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
 		B0AEEFAB206945A500F743AF /* CBErrorCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CBErrorCode.swift; sourceTree = "<group>"; };
 		B0AEEFAC206945A500F743AF /* CBError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CBError.swift; sourceTree = "<group>"; };
-		B0AEEFB0206945BF00F743AF /* CobinhoodSessionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CobinhoodSessionManager.swift; sourceTree = "<group>"; };
+		B0AEEFB0206945BF00F743AF /* MSessionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MSessionManager.swift; sourceTree = "<group>"; };
 		B0AEEFB3206945D100F743AF /* UITextFieldExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITextFieldExtensions.swift; sourceTree = "<group>"; };
 		B0AEEFB4206945D200F743AF /* UIButtonExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIButtonExtensions.swift; sourceTree = "<group>"; };
 		B0AEEFB5206945D200F743AF /* UIViewExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewExtensions.swift; sourceTree = "<group>"; };
@@ -95,11 +120,6 @@
 		B0AEEFDE206945ED00F743AF /* Network.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
 		B0AEEFE0206945ED00F743AF /* Notification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notification.swift; sourceTree = "<group>"; };
 		B0AEEFEB206947D300F743AF /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
-		B0AEEFED2069515600F743AF /* ServiceModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceModule.swift; sourceTree = "<group>"; };
-		B0AEEFEF206954BB00F743AF /* Key.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Key.swift; sourceTree = "<group>"; };
-		B0AEEFF1206A9BC000F743AF /* ShowTime.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowTime.swift; sourceTree = "<group>"; };
-		B0AEEFF3206BC66C00F743AF /* TicketType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicketType.swift; sourceTree = "<group>"; };
-		B0AEEFF5206BE82E00F743AF /* Seats.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Seats.swift; sourceTree = "<group>"; };
 		B0BBFECD20693E1800F59FCC /* MiramarTicketMaster.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MiramarTicketMaster.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B0BBFED020693E1800F59FCC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B0BBFED220693E1800F59FCC /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -110,6 +130,12 @@
 		B0BBFEE120693E1800F59FCC /* MiramarTicketMasterTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MiramarTicketMasterTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B0BBFEE520693E1800F59FCC /* MiramarTicketMasterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiramarTicketMasterTests.swift; sourceTree = "<group>"; };
 		B0BBFEE720693E1800F59FCC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B0C64A39225F29BA00B4F921 /* SeatViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeatViewModel.swift; sourceTree = "<group>"; };
+		B0C64A3C225F327900B4F921 /* MovieSessionFinder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieSessionFinder.swift; sourceTree = "<group>"; };
+		B0C64A3E225F33A000B4F921 /* SeatFinder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeatFinder.swift; sourceTree = "<group>"; };
+		B0C64A44225F42C900B4F921 /* TicketType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TicketType.swift; sourceTree = "<group>"; };
+		B0C64A46225F455700B4F921 /* TicketTypesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicketTypesViewModel.swift; sourceTree = "<group>"; };
+		B0C64A48225F4F0600B4F921 /* SeatAndTicketViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeatAndTicketViewModel.swift; sourceTree = "<group>"; };
 		CE65D4B803D56EBAFBB8B856 /* Pods_target_MiramarTicketMaster.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_target_MiramarTicketMaster.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E4E2117115D5F3F66A8776FB /* Pods-target-MiramarTicketMaster.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-target-MiramarTicketMaster.release.xcconfig"; path = "Pods/Target Support Files/Pods-target-MiramarTicketMaster/Pods-target-MiramarTicketMaster.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -133,11 +159,25 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		B08057B8225E477D0003D59B /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				B08057BB225E479C0003D59B /* ViewModel.swift */,
+				B08057B9225E478A0003D59B /* LoginViewModel.swift */,
+				B08057BF225E53520003D59B /* MovieViewModel.swift */,
+				B0C64A39225F29BA00B4F921 /* SeatViewModel.swift */,
+				B0C64A46225F455700B4F921 /* TicketTypesViewModel.swift */,
+				B0C64A48225F4F0600B4F921 /* SeatAndTicketViewModel.swift */,
+				B08057C9225F95740003D59B /* OrderViewModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
 		B0AEEFA52069454100F743AF /* API */ = {
 			isa = PBXGroup;
 			children = (
-				B0AEEF9C2069453800F743AF /* API.swift */,
-				B0AEEFED2069515600F743AF /* ServiceModule.swift */,
+				B08057AE225E34EA0003D59B /* NetworkService.swift */,
+				B08057B0225E35EB0003D59B /* MiramarService.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -145,14 +185,15 @@
 		B0AEEFAA2069456900F743AF /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				B0AEEFA62069456400F743AF /* BaseModel.swift */,
-				B0AEEFA72069456500F743AF /* ThreadSafeElement.swift */,
-				B0AEEFEF206954BB00F743AF /* Key.swift */,
-				B0AEEFF1206A9BC000F743AF /* ShowTime.swift */,
-				B0AEEFF3206BC66C00F743AF /* TicketType.swift */,
-				B0AEEFF5206BE82E00F743AF /* Seats.swift */,
-				B08D2970206F3B4800E3F5BA /* OrderConfirm.swift */,
-				B08D2972206F417300E3F5BA /* OrderResult.swift */,
+				B08057B2225E37540003D59B /* AuthToken.swift */,
+				B08057B6225E3C0A0003D59B /* Member.swift */,
+				B08057BD225E4CD40003D59B /* MovieSession.swift */,
+				B08057C1225E57F20003D59B /* SeatPlan.swift */,
+				B0C64A44225F42C900B4F921 /* TicketType.swift */,
+				B08057C5225F83680003D59B /* Order.swift */,
+				B08057C7225F92C30003D59B /* OrderTicket.swift */,
+				B08057CB225F971F0003D59B /* Payment.swift */,
+				B08057CD225F9D0F0003D59B /* OrderPayment.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -169,7 +210,7 @@
 		B0AEEFB2206945C900F743AF /* Managers */ = {
 			isa = PBXGroup;
 			children = (
-				B0AEEFB0206945BF00F743AF /* CobinhoodSessionManager.swift */,
+				B0AEEFB0206945BF00F743AF /* MSessionManager.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -195,6 +236,7 @@
 				B0AEEFC3206945D500F743AF /* UIResponderExtension.swift */,
 				B0AEEFB3206945D100F743AF /* UITextFieldExtensions.swift */,
 				B0AEEFB5206945D200F743AF /* UIViewExtensions.swift */,
+				B08057B4225E39530003D59B /* SingleExtensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -233,6 +275,8 @@
 		B0BBFECF20693E1800F59FCC /* MiramarTicketMaster */ = {
 			isa = PBXGroup;
 			children = (
+				B0C64A3B225F326100B4F921 /* Helper */,
+				B08057B8225E477D0003D59B /* ViewModels */,
 				B0BBFED020693E1800F59FCC /* AppDelegate.swift */,
 				B0AEEFEB206947D300F743AF /* Utils.swift */,
 				B0AEEFA52069454100F743AF /* API */,
@@ -242,6 +286,7 @@
 				B0AEEFD7206945E000F743AF /* Extensions */,
 				B0AEEFEA206945F900F743AF /* Constants */,
 				B0BBFED220693E1800F59FCC /* ViewController.swift */,
+				B08057CF225F9EFD0003D59B /* Config.swift */,
 				B0BBFED420693E1800F59FCC /* Main.storyboard */,
 				B0BBFED720693E1800F59FCC /* Assets.xcassets */,
 				B0BBFED920693E1800F59FCC /* LaunchScreen.storyboard */,
@@ -257,6 +302,16 @@
 				B0BBFEE720693E1800F59FCC /* Info.plist */,
 			);
 			path = MiramarTicketMasterTests;
+			sourceTree = "<group>";
+		};
+		B0C64A3B225F326100B4F921 /* Helper */ = {
+			isa = PBXGroup;
+			children = (
+				B0C64A3C225F327900B4F921 /* MovieSessionFinder.swift */,
+				B0C64A3E225F33A000B4F921 /* SeatFinder.swift */,
+				B08057C3225F826D0003D59B /* TicketFinder.swift */,
+			);
+			path = Helper;
 			sourceTree = "<group>";
 		};
 		DECC6039AC04B3E7752D15F8 /* Frameworks */ = {
@@ -288,7 +343,6 @@
 				B0BBFECA20693E1800F59FCC /* Frameworks */,
 				B0BBFECB20693E1800F59FCC /* Resources */,
 				BB0AA0AF705FC05B68C630E6 /* [CP] Embed Pods Frameworks */,
-				9EA674BBF106C5477BB827D2 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -396,21 +450,6 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		9EA674BBF106C5477BB827D2 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-target-MiramarTicketMaster/Pods-target-MiramarTicketMaster-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		BB0AA0AF705FC05B68C630E6 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -449,43 +488,56 @@
 			buildActionMask = 2147483647;
 			files = (
 				B0AEEFE4206945ED00F743AF /* APIModule.swift in Sources */,
-				B0AEEFF2206A9BC000F743AF /* ShowTime.swift in Sources */,
+				B08057B1225E35EB0003D59B /* MiramarService.swift in Sources */,
 				B0AEEFC6206945D600F743AF /* UIButtonExtensions.swift in Sources */,
-				B0AEEFF0206954BB00F743AF /* Key.swift in Sources */,
-				B0AEEFB1206945BF00F743AF /* CobinhoodSessionManager.swift in Sources */,
+				B0C64A3F225F33A000B4F921 /* SeatFinder.swift in Sources */,
+				B0AEEFB1206945BF00F743AF /* MSessionManager.swift in Sources */,
+				B0C64A45225F42CA00B4F921 /* TicketType.swift in Sources */,
 				B0AEEFCD206945D600F743AF /* NSMutableAttributedStringExtensions.swift in Sources */,
-				B0AEEFA82069456500F743AF /* BaseModel.swift in Sources */,
 				B0AEEFD5206945D600F743AF /* UIResponderExtension.swift in Sources */,
+				B08057C6225F83680003D59B /* Order.swift in Sources */,
 				B0AEEFAD206945A500F743AF /* CBErrorCode.swift in Sources */,
+				B0C64A3D225F327900B4F921 /* MovieSessionFinder.swift in Sources */,
+				B08057BC225E479C0003D59B /* ViewModel.swift in Sources */,
 				B0AEEFD2206945D600F743AF /* BundleExtensions.swift in Sources */,
 				B0AEEFD1206945D600F743AF /* DispatchQueueExtensions.swift in Sources */,
 				B0AEEFEC206947D300F743AF /* Utils.swift in Sources */,
 				B0AEEFCF206945D600F743AF /* DateExtensions.swift in Sources */,
 				B0AEEFE7206945ED00F743AF /* Network.swift in Sources */,
-				B0AEEFF6206BE82E00F743AF /* Seats.swift in Sources */,
 				B0AEEFD4206945D600F743AF /* UIFontExtensions.swift in Sources */,
 				B0AEEFC8206945D600F743AF /* ErrorExtensions.swift in Sources */,
+				B0C64A3A225F29BA00B4F921 /* SeatViewModel.swift in Sources */,
 				B0AEEFCA206945D600F743AF /* NetworkReachabilityManagerExtensions.swift in Sources */,
 				B0AEEFD6206945D600F743AF /* DecoderExtensions.swift in Sources */,
+				B08057C8225F92C30003D59B /* OrderTicket.swift in Sources */,
+				B08057B3225E37540003D59B /* AuthToken.swift in Sources */,
 				B0AEEFC5206945D600F743AF /* UITextFieldExtensions.swift in Sources */,
-				B0AEEFF4206BC66C00F743AF /* TicketType.swift in Sources */,
-				B0AEEFA92069456500F743AF /* ThreadSafeElement.swift in Sources */,
+				B08057BA225E478A0003D59B /* LoginViewModel.swift in Sources */,
 				B0BBFED320693E1800F59FCC /* ViewController.swift in Sources */,
 				B0AEEFD0206945D600F743AF /* RxAlamofire.swift in Sources */,
 				B0AEEFC7206945D600F743AF /* UIViewExtensions.swift in Sources */,
+				B08057BE225E4CD40003D59B /* MovieSession.swift in Sources */,
+				B08057B5225E39530003D59B /* SingleExtensions.swift in Sources */,
 				B0AEEFCB206945D600F743AF /* DataExtensions.swift in Sources */,
-				B08D2971206F3B4800E3F5BA /* OrderConfirm.swift in Sources */,
 				B0AEEFC9206945D600F743AF /* StringExtensions.swift in Sources */,
+				B08057CE225F9D0F0003D59B /* OrderPayment.swift in Sources */,
+				B0C64A49225F4F0600B4F921 /* SeatAndTicketViewModel.swift in Sources */,
+				B08057C2225E57F20003D59B /* SeatPlan.swift in Sources */,
+				B08057C4225F826D0003D59B /* TicketFinder.swift in Sources */,
 				B0AEEFCC206945D600F743AF /* UIColorExtensions.swift in Sources */,
-				B0AEEFA22069453900F743AF /* API.swift in Sources */,
-				B0AEEFEE2069515600F743AF /* ServiceModule.swift in Sources */,
+				B08057D0225F9EFD0003D59B /* Config.swift in Sources */,
+				B08057CC225F971F0003D59B /* Payment.swift in Sources */,
+				B08057B7225E3C0A0003D59B /* Member.swift in Sources */,
 				B0AEEFD3206945D600F743AF /* UIImageExtension.swift in Sources */,
+				B08057CA225F95740003D59B /* OrderViewModel.swift in Sources */,
 				B0BBFED120693E1800F59FCC /* AppDelegate.swift in Sources */,
 				B0AEEFCE206945D600F743AF /* CellExtensions.swift in Sources */,
 				B0AEEFE9206945ED00F743AF /* Notification.swift in Sources */,
-				B08D2973206F417300E3F5BA /* OrderResult.swift in Sources */,
 				B0AEEFE5206945ED00F743AF /* Environments.swift in Sources */,
+				B08057C0225E53520003D59B /* MovieViewModel.swift in Sources */,
+				B08057AF225E34EA0003D59B /* NetworkService.swift in Sources */,
 				B0AEEFAE206945A500F743AF /* CBError.swift in Sources */,
+				B0C64A47225F455700B4F921 /* TicketTypesViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
