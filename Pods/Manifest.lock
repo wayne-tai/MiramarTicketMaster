@@ -33,6 +33,16 @@ DEPENDENCIES:
   - SwifterSwift (~> 3.2.0)
   - SwiftyBeaver (~> 1.4.0)
 
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - Alamofire
+    - RxAlamofire
+    - RxCocoa
+    - RxSwift
+    - SnapKit
+    - SwifterSwift
+    - SwiftyBeaver
+
 SPEC CHECKSUMS:
   Alamofire: 2d95912bf4c34f164fdfc335872e8c312acaea4a
   RxAlamofire: 5eb39188c4917ad98127c0ecb4878a61b7517003
@@ -44,4 +54,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: d37df96cc7c22ee53604068bb062809060379277
 
-COCOAPODS: 1.4.0
+COCOAPODS: 1.5.3

@@ -50,6 +50,9 @@
 		B0BBFED820693E1800F59FCC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B0BBFED720693E1800F59FCC /* Assets.xcassets */; };
 		B0BBFEDB20693E1800F59FCC /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B0BBFED920693E1800F59FCC /* LaunchScreen.storyboard */; };
 		B0BBFEE620693E1800F59FCC /* MiramarTicketMasterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0BBFEE520693E1800F59FCC /* MiramarTicketMasterTests.swift */; };
+		B0C64A3A225F29BA00B4F921 /* SeatViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0C64A39225F29BA00B4F921 /* SeatViewModel.swift */; };
+		B0C64A3D225F327900B4F921 /* MovieSessionFinder.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0C64A3C225F327900B4F921 /* MovieSessionFinder.swift */; };
+		B0C64A3F225F33A000B4F921 /* SeatFinder.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0C64A3E225F33A000B4F921 /* SeatFinder.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -110,6 +113,9 @@
 		B0BBFEE120693E1800F59FCC /* MiramarTicketMasterTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MiramarTicketMasterTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B0BBFEE520693E1800F59FCC /* MiramarTicketMasterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiramarTicketMasterTests.swift; sourceTree = "<group>"; };
 		B0BBFEE720693E1800F59FCC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B0C64A39225F29BA00B4F921 /* SeatViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeatViewModel.swift; sourceTree = "<group>"; };
+		B0C64A3C225F327900B4F921 /* MovieSessionFinder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieSessionFinder.swift; sourceTree = "<group>"; };
+		B0C64A3E225F33A000B4F921 /* SeatFinder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeatFinder.swift; sourceTree = "<group>"; };
 		CE65D4B803D56EBAFBB8B856 /* Pods_target_MiramarTicketMaster.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_target_MiramarTicketMaster.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E4E2117115D5F3F66A8776FB /* Pods-target-MiramarTicketMaster.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-target-MiramarTicketMaster.release.xcconfig"; path = "Pods/Target Support Files/Pods-target-MiramarTicketMaster/Pods-target-MiramarTicketMaster.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -139,6 +145,7 @@
 				B08057BB225E479C0003D59B /* ViewModel.swift */,
 				B08057B9225E478A0003D59B /* LoginViewModel.swift */,
 				B08057BF225E53520003D59B /* MovieViewModel.swift */,
+				B0C64A39225F29BA00B4F921 /* SeatViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -240,6 +247,7 @@
 		B0BBFECF20693E1800F59FCC /* MiramarTicketMaster */ = {
 			isa = PBXGroup;
 			children = (
+				B0C64A3B225F326100B4F921 /* Helper */,
 				B08057B8225E477D0003D59B /* ViewModels */,
 				B0BBFED020693E1800F59FCC /* AppDelegate.swift */,
 				B0AEEFEB206947D300F743AF /* Utils.swift */,
@@ -265,6 +273,15 @@
 				B0BBFEE720693E1800F59FCC /* Info.plist */,
 			);
 			path = MiramarTicketMasterTests;
+			sourceTree = "<group>";
+		};
+		B0C64A3B225F326100B4F921 /* Helper */ = {
+			isa = PBXGroup;
+			children = (
+				B0C64A3C225F327900B4F921 /* MovieSessionFinder.swift */,
+				B0C64A3E225F33A000B4F921 /* SeatFinder.swift */,
+			);
+			path = Helper;
 			sourceTree = "<group>";
 		};
 		DECC6039AC04B3E7752D15F8 /* Frameworks */ = {
@@ -296,7 +313,6 @@
 				B0BBFECA20693E1800F59FCC /* Frameworks */,
 				B0BBFECB20693E1800F59FCC /* Resources */,
 				BB0AA0AF705FC05B68C630E6 /* [CP] Embed Pods Frameworks */,
-				9EA674BBF106C5477BB827D2 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -404,21 +420,6 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		9EA674BBF106C5477BB827D2 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-target-MiramarTicketMaster/Pods-target-MiramarTicketMaster-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		BB0AA0AF705FC05B68C630E6 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -459,10 +460,12 @@
 				B0AEEFE4206945ED00F743AF /* APIModule.swift in Sources */,
 				B08057B1225E35EB0003D59B /* MiramarService.swift in Sources */,
 				B0AEEFC6206945D600F743AF /* UIButtonExtensions.swift in Sources */,
+				B0C64A3F225F33A000B4F921 /* SeatFinder.swift in Sources */,
 				B0AEEFB1206945BF00F743AF /* MSessionManager.swift in Sources */,
 				B0AEEFCD206945D600F743AF /* NSMutableAttributedStringExtensions.swift in Sources */,
 				B0AEEFD5206945D600F743AF /* UIResponderExtension.swift in Sources */,
 				B0AEEFAD206945A500F743AF /* CBErrorCode.swift in Sources */,
+				B0C64A3D225F327900B4F921 /* MovieSessionFinder.swift in Sources */,
 				B08057BC225E479C0003D59B /* ViewModel.swift in Sources */,
 				B0AEEFD2206945D600F743AF /* BundleExtensions.swift in Sources */,
 				B0AEEFD1206945D600F743AF /* DispatchQueueExtensions.swift in Sources */,
@@ -471,6 +474,7 @@
 				B0AEEFE7206945ED00F743AF /* Network.swift in Sources */,
 				B0AEEFD4206945D600F743AF /* UIFontExtensions.swift in Sources */,
 				B0AEEFC8206945D600F743AF /* ErrorExtensions.swift in Sources */,
+				B0C64A3A225F29BA00B4F921 /* SeatViewModel.swift in Sources */,
 				B0AEEFCA206945D600F743AF /* NetworkReachabilityManagerExtensions.swift in Sources */,
 				B0AEEFD6206945D600F743AF /* DecoderExtensions.swift in Sources */,
 				B08057B3225E37540003D59B /* AuthToken.swift in Sources */,

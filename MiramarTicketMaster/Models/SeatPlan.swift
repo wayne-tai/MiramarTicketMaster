@@ -16,6 +16,11 @@ struct SeatPlan: Decodable {
 		case result = "Result"
 		case data = "Data"
 	}
+    
+    var areas: [SeatLayoutData.Area] {
+        return data.seatLayoutData.areas
+    }
+    
 }
 
 extension SeatPlan {
@@ -51,7 +56,7 @@ extension SeatLayoutData {
 extension SeatLayoutData.Area {
 	
 	struct Row: Decodable {
-		let physicalName: String
+		let physicalName: String?
 		let seats: [Seat]
 		
 		enum CodingKeys: String, CodingKey {
@@ -63,11 +68,12 @@ extension SeatLayoutData.Area {
 
 extension SeatLayoutData.Area.Row {
 	
-	struct Seat: Decodable {
+	class Seat: Decodable {
 		let id: String
 		let originalStatus: Int
 		let position: Position
 		let status: Int
+        var score: Int
 		
 		enum CodingKeys: String, CodingKey {
 			case id = "Id"
@@ -75,10 +81,39 @@ extension SeatLayoutData.Area.Row {
 			case position = "Position"
 			case status = "Status"
 		}
+        
+        required init(from decoder: Decoder) throws {
+            let container = try decoder.container(keyedBy: CodingKeys.self)
+            self.id = try container.decode(String.self, forKey: .id)
+            self.originalStatus = try container.decode(Int.self, forKey: .originalStatus)
+            self.position = try container.decode(Position.self, forKey: .position)
+            self.status = try container.decode(Int.self, forKey: .status)
+            self.score = 0
+        }
+        
+        var seatStatus: Status {
+            return Status(rawValue: status)
+        }
 	}
 }
 
 extension SeatLayoutData.Area.Row.Seat {
+    
+    enum Status: Int {
+        case empty = 0
+        case sold = 2
+        case other
+        
+        init(rawValue: Int) {
+            if rawValue == 0 {
+                self = .empty
+            } else if rawValue == 2 {
+                self = .sold
+            } else {
+                self = .other
+            }
+        }
+    }
 	
 	struct Position: Decodable {
 		let areaNumber: Int

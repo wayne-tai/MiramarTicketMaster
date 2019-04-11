@@ -9,7 +9,7 @@
 import Foundation
 
 protocol MovieViewModelDelegate: AnyObject {
-	func didGetMovieSession(movieSession: MovieSession)
+    func didGetMovieSession(movieSession: MovieSession)
 }
 
 class MovieViewModel: ViewModel {
@@ -20,17 +20,15 @@ class MovieViewModel: ViewModel {
 	
 	let sessionId: String
 	let authToken: String
-	let authData: String
 	
 	let network = MiramarService()
 	
 	let repeatInterval: DispatchTimeInterval = .seconds(2)
 	var timer: DispatchSourceTimer?
-	let timerQueue: DispatchQueue = DispatchQueue(label: "idv.wayne.miramar.ticket.master.timer", attributes: .concurrent)
+	let timerQueue: DispatchQueue = DispatchQueue(label: "idv.wayne.miramar.ticket.master.movie.timer", attributes: .concurrent)
 	
-	init(token: String, authData: String, sessionId: String) {
+	init(token: String, sessionId: String) {
 		self.authToken = token
-		self.authData = authData
 		self.sessionId = sessionId
 	}
 	

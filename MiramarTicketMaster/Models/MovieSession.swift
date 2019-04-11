@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct MovieSession: Decodable {
+class MovieSession: Decodable {
 	let result: Int
 	let data: ShowDates
 	
@@ -28,7 +28,7 @@ extension MovieSession {
 		}
 	}
 	
-	struct ShowDate: Decodable {
+	class ShowDate: Decodable {
 		let movies: [Movie]
 		let dateTime: String
 		let week: String
@@ -43,7 +43,7 @@ extension MovieSession {
 
 extension MovieSession.ShowDate {
 	
-	struct Movie: Decodable {
+	class Movie: Decodable {
 		let title: String
 		let titleAlt: String
 		let screens: [Screen]
@@ -71,7 +71,7 @@ extension MovieSession.ShowDate.Movie {
 
 extension MovieSession.ShowDate.Movie.Screen {
 	
-	struct Session: Decodable {
+	class Session: Decodable {
 		let sessionId: String
 		let showtime: String
 		

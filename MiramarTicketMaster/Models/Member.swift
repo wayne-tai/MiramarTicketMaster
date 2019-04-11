@@ -10,26 +10,62 @@ import Foundation
 
 struct Member: Decodable {
 	let result: Int
-	let data: MemberInfo
+	let data: Data
 	
 	enum CodingKeys: String, CodingKey {
 		case result = "Result"
 		case data = "Data"
 	}
 	
-	var info: MemberInfo {
-		return data
+	var memberAuthData: String {
+		return data.memberAuthData
 	}
+    
+    var memberId: String {
+        return data.loyaltyMember.memberId
+    }
+    
+    var fullName: String {
+        return data.loyaltyMember.fullName
+    }
+    
+    var email: String {
+        return data.loyaltyMember.email
+    }
+    
+    var mobilePhone: String {
+        return data.loyaltyMember.mobilePhone
+    }
 }
 
-struct MemberInfo: Decodable {
-	let memberAuthData: String
-	
-	enum CodingKeys: String, CodingKey {
-		case memberAuthData = "MemberAuthData"
-	}
-	
-	var authData: String {
-		return memberAuthData
-	}
+extension Member {
+    
+    struct Data: Decodable {
+        let memberAuthData: String
+        let loyaltyMember: LoyaltyMember
+        
+        enum CodingKeys: String, CodingKey {
+            case memberAuthData = "MemberAuthData"
+            case loyaltyMember = "LoyaltyMember"
+        }
+    }
 }
+
+extension Member.Data {
+    
+    struct LoyaltyMember: Decodable {
+        let fullName: String
+        let memberId: String
+        let email: String
+        let mobilePhone: String
+        
+        enum CodingKeys: String, CodingKey {
+            case fullName = "FullName"
+            case memberId = "MemberId"
+            case email = "Email"
+            case mobilePhone = "MobilePhone"
+        }
+    }
+}
+
+

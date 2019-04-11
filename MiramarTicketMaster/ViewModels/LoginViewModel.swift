@@ -9,7 +9,7 @@
 import Foundation
 
 protocol LoginViewModelDelegate: AnyObject {
-	func didLoginCompleted(with token: String, authData: String)
+	func didLoginCompleted(with token: String, member: Member)
 }
 
 class LoginViewModel: ViewModel {
@@ -47,6 +47,12 @@ class LoginViewModel: ViewModel {
 					self.logger?.log("============================\n\n")
 					self.authToken = authToken.token
 					self.login(with: authToken.token)
+                    if let allCookies = HTTPCookieStorage.shared.cookies {
+                        for cookie in allCookies {
+                            self.logger?.log(cookie.description)
+                            log.info(cookie)
+                        }
+                    }
 					
 				case .error(let error):
 					self.logger?.log("Get auth token failed...\n\n")
@@ -64,7 +70,7 @@ class LoginViewModel: ViewModel {
 				case .success(let member):
 					self.logger?.log("Login success!\n")
 					self.logger?.log("============================\n\n")
-					self.delegate?.didLoginCompleted(with: self.authToken, authData: member.info.authData)
+					self.delegate?.didLoginCompleted(with: self.authToken, member: member)
 					
 				case .error(let error):
 					self.logger?.log("Get member info failed...\n\n")

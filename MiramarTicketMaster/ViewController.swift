@@ -18,24 +18,6 @@ enum CinemaName: String {
     case royal = "美麗華大直皇家影城"
 }
 
-//enum MasterState {
-//    case initial
-//	case didLoggedIn
-//
-//
-//
-//
-//
-//
-//
-//    case announceReceived(key: String)
-//    case showTimeReceived(cinemas: [Cinema])
-//    case ticketTypeReceived(ticketTypes: [TicketType])
-////    case sessionSeatDataReceived(ticketTypes: [Area])
-////    case orderConfirmReceived(orderConfirm: OrderConfirm)
-//    case orderResultReceived(orderResult: OrderResult)
-//}
-
 struct TargetSeatRange {
     let row: String
     let range: CountableClosedRange<Int>
@@ -86,12 +68,14 @@ class ViewController: UIViewController {
 	
 	let network = MiramarService()
 	
-	let sessionId = "YRHYN04001LX684ETHW1ZA4S4YED01X9"
+	let sessionId = "F79VC9DCH8X0XZQXO8MVQFCBLYQQFZW8"
 	
 	var viewModel: ViewModel = EmptyViewModel()
 	
-	var authToken: String?
+	var authToken: String = ""
+    var member: Member?
 	var movieSession: MovieSession?
+    var seatPlan: SeatPlan?
     
     /// Local Memory Caches
     
@@ -863,8 +847,11 @@ extension ViewController: ViewModelLogger {
 }
 
 extension ViewController: LoginViewModelDelegate {
-	func didLoginCompleted(with token: String, authData: String) {
-		let viewModel = MovieViewModel(token: token, authData: authData, sessionId: sessionId)
+	func didLoginCompleted(with token: String, member: Member) {
+        self.authToken = token
+        self.member = member
+        
+		let viewModel = MovieViewModel(token: token, sessionId: sessionId)
 		viewModel.delegate = self
 		viewModel.logger = self
 		self.viewModel = viewModel
@@ -874,46 +861,54 @@ extension ViewController: LoginViewModelDelegate {
 extension ViewController: MovieViewModelDelegate {
 	func didGetMovieSession(movieSession: MovieSession) {
 		self.movieSession = movieSession
+        
 		log("Trying to get the best movie session...\n")
-		guard let targetDate = targetMovieDateTimes.first else { return }
-		guard let session = giveMeAGoodSession(movieSession: movieSession, forTargetDate: targetDate) else { return }
-		log("Get the best movie session \(session.sessionId), at time \(session.showtime)")
-		log("============================\n\n")
+        var optionalSession: MovieSession.ShowDate.Movie.Screen.Session?
+        while optionalSession == nil {
+            guard let targetDate = targetMovieDateTimes.first else { return }
+            let finder = MovieSessionFinder(targetMovieName: targetMovieName, tolerance: 14400.0)
+            optionalSession = finder.session(from: &(self.movieSession!), forTargetDate: targetDate)
+            
+            if let session = optionalSession {
+                log("Get the best movie session \(session.sessionId), at time \(session.showtime)\n")
+                log("============================\n\n")
+                break
+            } else {
+                targetMovieDateTimes = Array(targetMovieDateTimes.dropFirst())
+            }
+        }
+        
+        guard let session = optionalSession else {
+            log("No movie session could be choose\n")
+            return
+        }
+
+        let viewModel = SeatViewModel(token: authToken, movieSessionId: session.sessionId)
+        viewModel.delegate = self
+        viewModel.logger = self
+        self.viewModel = viewModel
 	}
-	
-	func giveMeAGoodSession(
-		movieSession: MovieSession,
-		forTargetDate targetDate: Date) -> MovieSession.ShowDate.Movie.Screen.Session?
-	{
-		guard let targetShowDateIndex = movieSession.data.showDates.firstIndex(where: { (showDate) -> Bool in
-			guard let date = showDate.dateTime.date else { return false }
-			return Calendar.current.isDate(date, inSameDayAs: targetDate)
-		}) else { return nil }
-		
-		guard let targetMovie = movieSession.data.showDates[targetShowDateIndex].movies.first(where: { (movie) -> Bool in
-			movie.titleAlt.contains(self.targetMovieName)
-		}) else { return nil }
-		
-		guard let targetScreen = targetMovie.screens.first(where: { (screen) -> Bool in
-			!screen.screenName.contains("IMAX")
-		}) else { return nil }
-		
-		let timeOffsets = targetScreen.sessions.map { (session) -> Double? in
-			guard let date = session.showtime.date else { return nil }
-			return abs(targetDate.timeIntervalSince(date))
-		}
-		
-		guard !timeOffsets.isEmpty else { return nil }
-		var targetIndex: Int = 0
-		var smallestTimeOffset: Double = 86400.0
-		for (idx, offset) in timeOffsets.enumerated() {
-			guard let offset = offset else { continue }
-			guard offset < smallestTimeOffset else { continue }
-			targetIndex = idx
-			smallestTimeOffset = offset
-		}
-		
-		let session = targetScreen.sessions[targetIndex]
-		return session
-	}
+}
+
+extension ViewController: SeatViewModelDelegate {
+    func didGetSeatPlan(seatPlan: SeatPlan) {
+        self.seatPlan = seatPlan
+        
+        log("Trying to get the best seats...\n")
+        let finder = SeatFinder(targetSeats: targetSeats, targetTicketQuantity: targetTicketQuantity)
+        let seats = finder.seats(from: seatPlan)
+        
+        if !seats.isEmpty {
+            log("Get the best seats \(seats)\n")
+            log("============================\n\n")
+            
+            
+            
+        } else {
+            log("No seats could be found in current movie session...")
+            didGetMovieSession(movieSession: self.movieSession!)
+        }
+    }
+    
+    
 }
