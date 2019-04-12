@@ -25,6 +25,7 @@
 		B08057CC225F971F0003D59B /* Payment.swift in Sources */ = {isa = PBXBuildFile; fileRef = B08057CB225F971F0003D59B /* Payment.swift */; };
 		B08057CE225F9D0F0003D59B /* OrderPayment.swift in Sources */ = {isa = PBXBuildFile; fileRef = B08057CD225F9D0F0003D59B /* OrderPayment.swift */; };
 		B08057D0225F9EFD0003D59B /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = B08057CF225F9EFD0003D59B /* Config.swift */; };
+		B08057D32260EB730003D59B /* TaskStateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B08057D22260EB730003D59B /* TaskStateView.swift */; };
 		B0AEEFAD206945A500F743AF /* CBErrorCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0AEEFAB206945A500F743AF /* CBErrorCode.swift */; };
 		B0AEEFAE206945A500F743AF /* CBError.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0AEEFAC206945A500F743AF /* CBError.swift */; };
 		B0AEEFB1206945BF00F743AF /* MSessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0AEEFB0206945BF00F743AF /* MSessionManager.swift */; };
@@ -97,6 +98,7 @@
 		B08057CB225F971F0003D59B /* Payment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Payment.swift; sourceTree = "<group>"; };
 		B08057CD225F9D0F0003D59B /* OrderPayment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderPayment.swift; sourceTree = "<group>"; };
 		B08057CF225F9EFD0003D59B /* Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
+		B08057D22260EB730003D59B /* TaskStateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskStateView.swift; sourceTree = "<group>"; };
 		B0AEEFAB206945A500F743AF /* CBErrorCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CBErrorCode.swift; sourceTree = "<group>"; };
 		B0AEEFAC206945A500F743AF /* CBError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CBError.swift; sourceTree = "<group>"; };
 		B0AEEFB0206945BF00F743AF /* MSessionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MSessionManager.swift; sourceTree = "<group>"; };
@@ -177,6 +179,14 @@
 				B08057C9225F95740003D59B /* OrderViewModel.swift */,
 			);
 			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		B08057D12260EB540003D59B /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				B08057D22260EB730003D59B /* TaskStateView.swift */,
+			);
+			path = UI;
 			sourceTree = "<group>";
 		};
 		B0AEEFA52069454100F743AF /* API */ = {
@@ -282,6 +292,7 @@
 		B0BBFECF20693E1800F59FCC /* MiramarTicketMaster */ = {
 			isa = PBXGroup;
 			children = (
+				B08057D12260EB540003D59B /* UI */,
 				B0C64A3B225F326100B4F921 /* Helper */,
 				B08057B8225E477D0003D59B /* ViewModels */,
 				B0BBFED020693E1800F59FCC /* AppDelegate.swift */,
@@ -500,6 +511,7 @@
 				B0AEEFC6206945D600F743AF /* UIButtonExtensions.swift in Sources */,
 				B0C64A3F225F33A000B4F921 /* SeatFinder.swift in Sources */,
 				B0AEEFB1206945BF00F743AF /* MSessionManager.swift in Sources */,
+				B08057D32260EB730003D59B /* TaskStateView.swift in Sources */,
 				B0C64A45225F42CA00B4F921 /* TicketType.swift in Sources */,
 				B0AEEFCD206945D600F743AF /* NSMutableAttributedStringExtensions.swift in Sources */,
 				B0AEEFD5206945D600F743AF /* UIResponderExtension.swift in Sources */,

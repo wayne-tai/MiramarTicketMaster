@@ -26,6 +26,28 @@ extension UIView {
 }
 
 extension UIView {
+	
+	enum SpacerProperty {
+		case vertical(CGFloat)
+		case horizontal(CGFloat)
+	}
+	
+	static func spacer(_ property: SpacerProperty) -> UIView {
+		let view = UIView()
+		view.backgroundColor = .clear
+		view.snp.makeConstraints { (maker) in
+			if case .horizontal(let spacing) = property {
+				maker.height.equalTo(spacing)
+			}
+			if case .vertical(let spacing) = property {
+				maker.width.equalTo(spacing)
+			}
+		}
+		return view
+	}
+}
+
+extension UIView {
     
     enum ShadowStyle {
         case normal

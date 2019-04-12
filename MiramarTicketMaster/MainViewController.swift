@@ -34,6 +34,16 @@ class MainViewController: ViewController {
 	var movieSession: MovieSession?
     var seatPlan: SeatPlan?
 	
+	let tasks: [TaskStateView.Task] = [
+		TaskStateView.Task.waiting(task: "Get auth token"),
+		TaskStateView.Task.waiting(task: "Account login"),
+		TaskStateView.Task.waiting(task: "Get movie sesssion"),
+		TaskStateView.MultipleTask.waiting(tasks: [
+			TaskStateView.Task.waiting(task: "Get seats"),
+			TaskStateView.Task.waiting(task: "Get tickets"),
+		])
+	]
+	
     /// Others
     
     fileprivate var logString:String = ""
@@ -50,8 +60,8 @@ class MainViewController: ViewController {
 	
     private var mainComponents: [UIView] {
         return [
-            textView,
-            separatorView2,
+            taskStateView,
+            .spacer(.horizontal(8)),
             buttonsStackview
         ]
     }
@@ -64,6 +74,11 @@ class MainViewController: ViewController {
         stackview.spacing = 4.0
         return stackview
     }()
+	
+	fileprivate lazy var taskStateView: TaskStateView = {
+		let view = TaskStateView(with: tasks)
+		return view
+	}()
     
     fileprivate lazy var sessionIdTitle: UILabel = {
         let label = UILabel()
@@ -103,20 +118,14 @@ class MainViewController: ViewController {
         return textView
     }()
     
-    fileprivate lazy var separatorView2: UIView = {
-        let view = UIView()
-        view.snp.makeConstraints {
-            $0.height.equalTo(8)
-        }
-        return view
-    }()
-    
     fileprivate lazy var buttonsStackview: UIStackView = {
         let stackview = UIStackView(arrangedSubviews: [startButton, backButton])
         stackview.alignment = .fill
         stackview.distribution = .fillEqually
         stackview.axis = .horizontal
         stackview.spacing = 10
+		stackview.isLayoutMarginsRelativeArrangement = true
+		stackview.layoutMargins = UIEdgeInsets(top: 0, left: 24, bottom: 0, right: 24)
         return stackview
     }()
     
@@ -174,7 +183,7 @@ class MainViewController: ViewController {
         stackView.snp.makeConstraints {
             $0.top.equalTo(topLayoutGuide.snp.bottom).offset(24)
             $0.bottom.equalTo(bottomLayoutGuide.snp.top).offset(-24)
-            $0.leading.trailing.equalToSuperview().inset(24)
+            $0.leading.trailing.equalToSuperview()
         }
     }
     
@@ -262,9 +271,26 @@ extension MainViewController: ViewModelLogger {
 }
 
 extension MainViewController: LoginViewModelDelegate {
+	func isGoingToGetAuthToken() {
+		let task = tasks[0]
+		task.state = .running
+	}
+
+	func didAuthTokenGetSucceed(token: String) {
+		self.authToken = token
+		let task = tasks[0]
+		task.state = .success
+	}
+	
+	func isGoingToLogin() {
+		let task = tasks[1]
+		task.state = .running
+	}
+	
 	func didLoginCompleted(with token: String, member: Member) {
-        self.authToken = token
         self.member = member
+		let task = tasks[1]
+		task.state = .success
         
 		let viewModel = MovieViewModel(token: token)
 		viewModel.delegate = self
