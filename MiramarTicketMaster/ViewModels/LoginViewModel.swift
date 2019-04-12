@@ -56,8 +56,9 @@ class LoginViewModel: ViewModel {
                     }
 					
 				case .error(let error):
-					self.logger?.log("[FAILED] Get auth token failed...\n\n")
+					self.logger?.log("[FAILED] Get auth token failed...\n")
 					self.logger?.log("[ERROR] \(error.localizedDescription)\n")
+                    self.getAuthToken()
 				}
 		}
 	}
@@ -75,8 +76,9 @@ class LoginViewModel: ViewModel {
 					self.delegate?.didLoginCompleted(with: self.authToken, member: member)
 					
 				case .error(let error):
-					self.logger?.log("[FAILED] Get member info failed...\n\n")
+					self.logger?.log("[FAILED] Get member info failed...\n")
 					self.logger?.log("[ERROR] \(error.localizedDescription)\n")
+                    self.login(with: token)
 				}
 			}
 	}

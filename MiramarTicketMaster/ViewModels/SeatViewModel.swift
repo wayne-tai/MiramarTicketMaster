@@ -61,7 +61,7 @@ class SeatViewModel: ViewModel {
                     self.delegate?.didGetSeatPlan(seatPlan: seatPlan, movieSessionId: self.movieSessionId)
                     
                 case .error(let error):
-                    self.logger?.log("[FAILED] Get seat plan failed...\n\n")
+                    self.logger?.log("[FAILED] Get seat plan failed...\n")
                     self.logger?.log("[ERROR] \(error.localizedDescription)\n")
                 }
         }
