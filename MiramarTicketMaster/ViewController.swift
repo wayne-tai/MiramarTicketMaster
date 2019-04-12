@@ -229,7 +229,7 @@ extension ViewController {
         }
         
         func log(_ message: String) {
-            self.message += message
+            self.message = message
             
             DispatchQueue.main.async {
                 self.textView.text = self.message

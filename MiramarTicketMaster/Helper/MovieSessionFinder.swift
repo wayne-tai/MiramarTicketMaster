@@ -12,10 +12,12 @@ class MovieSessionFinder {
     
     let tolerance: Double
     let targetMovieName: String
+    let screenFilter: ScreenFilter
     
-    init(targetMovieName: String, tolerance: Double) {
+    init(targetMovieName: String, screenFilter: ScreenFilter, tolerance: Double) {
         self.targetMovieName = targetMovieName
         self.tolerance = tolerance
+        self.screenFilter = screenFilter
     }
     
     func session(
@@ -32,7 +34,7 @@ class MovieSessionFinder {
         }) else { return nil }
         
         guard let targetScreen = targetMovie.screens.first(where: { (screen) -> Bool in
-            !screen.screenName.contains("IMAX")
+            screenFilter.validate(with: screen.screenName)
         }) else { return nil }
         
         let timeOffsets = targetScreen.sessions.map { (session) -> Double? in

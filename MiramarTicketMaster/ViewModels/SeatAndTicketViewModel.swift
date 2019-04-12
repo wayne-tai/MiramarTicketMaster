@@ -27,6 +27,7 @@ class SeatAndTicketViewModel: ViewModel {
     var targetSeats: [TargetSeatRange] = []
     var targetTicketQuantity: Int = 0
     var targetTicketType: String = ""
+    var screenFilter: ScreenFilter
 	
     var movieSession: MovieSession
     let authToken: String
@@ -53,6 +54,7 @@ class SeatAndTicketViewModel: ViewModel {
 		self.targetSeats = config.targetSeats
 		self.targetTicketQuantity = config.targetTicketQuantity
         self.targetTicketType = config.targetTicketType
+        self.screenFilter = config.screenFilter
     }
     
     func start() {
@@ -64,7 +66,7 @@ class SeatAndTicketViewModel: ViewModel {
 				return
 			}
 			
-            let finder = MovieSessionFinder(targetMovieName: targetMovieName, tolerance: 14400.0)
+            let finder = MovieSessionFinder(targetMovieName: targetMovieName, screenFilter: screenFilter, tolerance: 14400.0)
             optionalSession = finder.session(from: &self.movieSession, forTargetDate: targetDate)
             
             if let session = optionalSession {

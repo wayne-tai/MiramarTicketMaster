@@ -64,7 +64,7 @@ class TicketTypesViewModel: ViewModel {
                     self.delegate?.didGetTicketType(ticketType: ticketTypes)
                     
                 case .error(let error):
-                    self.logger?.log("[FAILED] Get ticket types failed...\n\n")
+                    self.logger?.log("[FAILED] Get ticket types failed...\n")
                     self.logger?.log("[ERROR] \(error.localizedDescription)\n")
                 }
         }

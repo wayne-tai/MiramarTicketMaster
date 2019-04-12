@@ -61,7 +61,7 @@ class MovieViewModel: ViewModel {
 					self.delegate?.didGetMovieSession(movieSession: movieSession)
 					
 				case .error(let error):
-					self.logger?.log("[FAILED] Get movie session failed...\n\n")
+					self.logger?.log("[FAILED] Get movie session failed...\n")
 					self.logger?.log("[ERROR] \(error.localizedDescription)\n")
 				}
 		}
