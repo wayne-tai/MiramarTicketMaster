@@ -65,7 +65,7 @@ class TicketTypesViewModel: ViewModel {
                     
                 case .error(let error):
                     self.logger?.log("[FAILED] Get ticket types failed...\n\n")
-                    self.logger?.log("[ERROR] \(error)\n")
+                    self.logger?.log("[ERROR] \(error.localizedDescription)\n")
                 }
         }
     }

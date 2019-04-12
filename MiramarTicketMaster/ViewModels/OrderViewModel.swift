@@ -99,7 +99,7 @@ class OrderViewModel: ViewModel {
 					
 				case .error(let error):
 					self.logger?.log("[FAILED] Order ticket failed...\n\n")
-					self.logger?.log("[ERROR] \(error)\n")
+					self.logger?.log("[ERROR] \(error.localizedDescription)\n")
 				}
 		}
 	}
@@ -131,7 +131,7 @@ class OrderViewModel: ViewModel {
 					
 				case .error(let error):
 					self.logger?.log("[FAILED] Order payment failed...\n\n")
-					self.logger?.log("[ERROR] \(error)\n")
+					self.logger?.log("[ERROR] \(error.localizedDescription)\n")
 				}
 		}
 	}

@@ -62,7 +62,7 @@ class MovieViewModel: ViewModel {
 					
 				case .error(let error):
 					self.logger?.log("[FAILED] Get movie session failed...\n\n")
-					self.logger?.log("[ERROR] \(error)\n")
+					self.logger?.log("[ERROR] \(error.localizedDescription)\n")
 				}
 		}
 	}

@@ -57,7 +57,7 @@ class LoginViewModel: ViewModel {
 					
 				case .error(let error):
 					self.logger?.log("[FAILED] Get auth token failed...\n\n")
-					self.logger?.log("[ERROR] \(error)\n")
+					self.logger?.log("[ERROR] \(error.localizedDescription)\n")
 				}
 		}
 	}
@@ -76,7 +76,7 @@ class LoginViewModel: ViewModel {
 					
 				case .error(let error):
 					self.logger?.log("[FAILED] Get member info failed...\n\n")
-					self.logger?.log("[ERROR] \(error)\n")
+					self.logger?.log("[ERROR] \(error.localizedDescription)\n")
 				}
 			}
 	}
