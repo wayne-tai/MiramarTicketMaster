@@ -47,22 +47,22 @@ class SeatViewModel: ViewModel {
     }
     
     func getSeatPlan() {
-        logger?.log("Get seat plan...\n")
+        logger?.log("[INFO] Get seat plan...\n")
         _ = network.getSeatPlan(with: authToken, movieSessionId: movieSessionId)
             .subscribe { [weak self] (event) in
                 guard let self = self else { return }
                 switch event {
                 case .success(let seatPlan):
 					guard seatPlan.result == 1 else { return }
-                    self.logger?.log("Get seat plan success!\n")
+                    self.logger?.log("[SUCCESS] Get seat plan success!\n")
                     self.logger?.log("============================\n\n")
                     self.timer?.cancel()
                     self.timer = nil
                     self.delegate?.didGetSeatPlan(seatPlan: seatPlan, movieSessionId: self.movieSessionId)
                     
                 case .error(let error):
-                    self.logger?.log("Get seat plan failed...\n\n")
-                    self.logger?.log("Error \(error)\n")
+                    self.logger?.log("[FAILED] Get seat plan failed...\n\n")
+                    self.logger?.log("[ERROR] \(error)\n")
                 }
         }
     }

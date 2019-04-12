@@ -37,14 +37,14 @@ class LoginViewModel: ViewModel {
 	}
 	
 	func getAuthToken() {
-		logger?.log("Get auth token...\n")
+		logger?.log("[INFO] Get auth token...\n")
 		_ = network.getAuthToken()
 			.subscribe { [weak self] (event) in
 				guard let self = self else { return }
 				switch event {
 				case .success(let authToken):
 					guard authToken.result == 1 else { return }
-					self.logger?.log("Get auth token success!\n")
+					self.logger?.log("[SUCCESS] Get auth token success!\n")
 					self.logger?.log("============================\n\n")
 					self.authToken = authToken.token
 					self.login(with: authToken.token)
@@ -56,27 +56,27 @@ class LoginViewModel: ViewModel {
                     }
 					
 				case .error(let error):
-					self.logger?.log("Get auth token failed...\n\n")
-					self.logger?.log("Error \(error)\n")
+					self.logger?.log("[FAILED] Get auth token failed...\n\n")
+					self.logger?.log("[ERROR] \(error)\n")
 				}
 		}
 	}
 	
 	func login(with token: String) {
-		logger?.log("Trying to login...\n")
+		logger?.log("[INFO] Trying to login...\n")
 		_ = network.login(with: token, sessionId: sessionId)
 			.subscribe { [weak self] (event) in
 				guard let self = self else { return }
 				switch event {
 				case .success(let member):
 					guard member.result == 1 else { return }
-					self.logger?.log("Login success!\n")
+					self.logger?.log("[SUCCESS] Login success!\n")
 					self.logger?.log("============================\n\n")
 					self.delegate?.didLoginCompleted(with: self.authToken, member: member)
 					
 				case .error(let error):
-					self.logger?.log("Get member info failed...\n\n")
-					self.logger?.log("Error \(error)\n")
+					self.logger?.log("[FAILED] Get member info failed...\n\n")
+					self.logger?.log("[ERROR] \(error)\n")
 				}
 			}
 	}

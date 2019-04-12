@@ -50,22 +50,22 @@ class TicketTypesViewModel: ViewModel {
     }
     
     func getTicketTypes() {
-        logger?.log("Get ticket types...\n")
+        logger?.log("[INFO] Get ticket types...\n")
         _ = network.getTicketTypes(with: authToken, memberId: memberId, movieSessionId: movieSessionId)
             .subscribe { [weak self] (event) in
                 guard let self = self else { return }
                 switch event {
                 case .success(let ticketTypes):
 					guard ticketTypes.result == 1 else { return }
-                    self.logger?.log("Get ticket types success!\n")
+                    self.logger?.log("[SUCCESS] Get ticket types success!\n")
                     self.logger?.log("============================\n\n")
                     self.timer?.cancel()
                     self.timer = nil
                     self.delegate?.didGetTicketType(ticketType: ticketTypes)
                     
                 case .error(let error):
-                    self.logger?.log("Get ticket types failed...\n\n")
-                    self.logger?.log("Error \(error)\n")
+                    self.logger?.log("[FAILED] Get ticket types failed...\n\n")
+                    self.logger?.log("[ERROR] \(error)\n")
                 }
         }
     }

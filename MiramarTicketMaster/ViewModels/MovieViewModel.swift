@@ -47,22 +47,22 @@ class MovieViewModel: ViewModel {
 	}
 	
 	func getMovieSessions() {
-		logger?.log("Get movie sessions...\n")
+		logger?.log("[INFO] Get movie sessions...\n")
 		_ = network.getMovieSessions(with: authToken)
 			.subscribe { [weak self] (event) in
 				guard let self = self else { return }
 				switch event {
 				case .success(let movieSession):
 					guard movieSession.result == 1 else { return }
-					self.logger?.log("Get movie session success!\n")
+					self.logger?.log("[SUCCESS] Get movie session success!\n")
 					self.logger?.log("============================\n\n")
 					self.timer?.cancel()
 					self.timer = nil
 					self.delegate?.didGetMovieSession(movieSession: movieSession)
 					
 				case .error(let error):
-					self.logger?.log("Get movie session failed...\n\n")
-					self.logger?.log("Error \(error)\n")
+					self.logger?.log("[FAILED] Get movie session failed...\n\n")
+					self.logger?.log("[ERROR] \(error)\n")
 				}
 		}
 	}

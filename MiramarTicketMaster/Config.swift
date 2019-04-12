@@ -10,9 +10,9 @@ import Foundation
 
 struct Config {
 	
-//	var targetMovieName: String = "沙贊"
+    var targetMovieName: String = "沙贊"
 	
-	var targetMovieName: String = "復仇者聯盟"
+//    var targetMovieName: String = "復仇者聯盟"
 	
 	var targetTicketType: String = "Adult"
 	

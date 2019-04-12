@@ -84,28 +84,28 @@ class OrderViewModel: ViewModel {
 	}
 	
 	func orderTicket() {
-		logger?.log("Preparing to order a ticker...\n")
+		logger?.log("[INFO] Preparing to order a ticker...\n")
 		_ = network.orderTicker(with: authToken, order: order)
 			.subscribe { [weak self] (event) in
 				guard let self = self else { return }
 				switch event {
 				case .success(let orderTicket):
 					guard orderTicket.result == 1 else { return } 
-					self.logger?.log("Order ticket success!\n")
+					self.logger?.log("[SUCCESS] Order ticket success!\n")
 					self.logger?.log("============================\n\n")
 					self.stop()
 					self.sessionId = orderTicket.data.order.userSessionId
 					self.startOrderPayment()
 					
 				case .error(let error):
-					self.logger?.log("Order ticket failed...\n\n")
-					self.logger?.log("Error \(error)\n")
+					self.logger?.log("[FAILED] Order ticket failed...\n\n")
+					self.logger?.log("[ERROR] \(error)\n")
 				}
 		}
 	}
 	
 	func orderPayment() {
-		logger?.log("Preparing to order payment...\n")
+		logger?.log("[INFO] Preparing to order payment...\n")
 		let quantity = Int(order.ticketTypes.first!.qty)!
 		let value = Int(order.ticketTypes.first!.priceInCents)!
 		let paymentValue = quantity * value
@@ -124,14 +124,14 @@ class OrderViewModel: ViewModel {
 				switch event {
 				case .success(let orderPayment):
 					guard orderPayment.result == 1 else { return }
-					self.logger?.log("Order payment success!\n")
+					self.logger?.log("[SUCCESS] Order payment success!\n")
 					self.logger?.log("============================\n\n")
 					self.stop()
 					self.delegate?.didOrderTicketAndPaymentSuccess()
 					
 				case .error(let error):
-					self.logger?.log("Order payment failed...\n\n")
-					self.logger?.log("Error \(error)\n")
+					self.logger?.log("[FAILED] Order payment failed...\n\n")
+					self.logger?.log("[ERROR] \(error)\n")
 				}
 		}
 	}

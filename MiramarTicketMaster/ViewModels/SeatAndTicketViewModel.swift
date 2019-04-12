@@ -26,6 +26,7 @@ class SeatAndTicketViewModel: ViewModel {
     var targetMovieName: String = ""
     var targetSeats: [TargetSeatRange] = []
     var targetTicketQuantity: Int = 0
+    var targetTicketType: String = ""
 	
     var movieSession: MovieSession
     let authToken: String
@@ -51,14 +52,15 @@ class SeatAndTicketViewModel: ViewModel {
 		self.targetMovieName = config.targetMovieName
 		self.targetSeats = config.targetSeats
 		self.targetTicketQuantity = config.targetTicketQuantity
+        self.targetTicketType = config.targetTicketType
     }
     
     func start() {
-        logger?.log("Trying to get the best movie session...\n")
+        logger?.log("[INFO] Trying to get the best movie session...\n")
         var optionalSession: MovieSession.ShowDate.Movie.Screen.Session?
         while optionalSession == nil {
             guard let targetDate = targetMovieDateTimes.first else {
-				delegate?.didGetSeatOrTicketFailed(reason: "No more movie sessions in target dates could be selected\n")
+				delegate?.didGetSeatOrTicketFailed(reason: "[FAILED] No more movie sessions in target dates could be selected\n")
 				return
 			}
 			
@@ -66,7 +68,7 @@ class SeatAndTicketViewModel: ViewModel {
             optionalSession = finder.session(from: &self.movieSession, forTargetDate: targetDate)
             
             if let session = optionalSession {
-                logger?.log("Get the best movie session \(session.sessionId), at time \(session.showtime)\n")
+                logger?.log("[SUCCESS] Get the best movie session \(session.sessionId), at time \(session.showtime)\n")
                 logger?.log("============================\n\n")
 				selectedSession = session
                 break
@@ -76,7 +78,7 @@ class SeatAndTicketViewModel: ViewModel {
         }
         
         guard let session = optionalSession else {
-            delegate?.didGetSeatOrTicketFailed(reason: "No movie session could be choose\n")
+            delegate?.didGetSeatOrTicketFailed(reason: "[FAILED] No movie session could be choose\n")
             return
         }
         
@@ -106,17 +108,18 @@ class SeatAndTicketViewModel: ViewModel {
 
 extension SeatAndTicketViewModel: SeatViewModelDelegate {
     func didGetSeatPlan(seatPlan: SeatPlan, movieSessionId: String) {
-        logger?.log("Trying to get the best seats...\n")
+        logger?.log("[INFO] Trying to get the best seats...\n")
         let finder = SeatFinder(targetSeats: targetSeats, targetTicketQuantity: targetTicketQuantity)
         let seats = finder.seats(from: seatPlan)
         
         if !seats.isEmpty, let areaCategoryCode = seatPlan.areas.first?.areaCategoryCode {
-            logger?.log("Get the best seats \(seats.map { $0.id })\n")
+            logger?.log("[SUCCESS] Get the best seats \(seats.map { $0.id })\n")
             logger?.log("============================\n\n")
 			selectedSeats = seats.map { $0.toSelectedSeat(with: areaCategoryCode) }
 			complete()
         } else {
-            logger?.log("No seats could be found in current movie session...\n")
+            logger?.log("[INFO] No seats could be found in current movie session...\n")
+            logger?.log("[INFO] Fallback to get another movie session...\n")
             selectedSeats = []
             start()
         }
@@ -126,14 +129,14 @@ extension SeatAndTicketViewModel: SeatViewModelDelegate {
 extension SeatAndTicketViewModel: TicketTypesViewModelDelegate {
     
     func didGetTicketType(ticketType: TicketType) {
-		logger?.log("Trying to find out the ticket type...\n")
-		let finder = TicketFinder(targetTicketQuantity: targetTicketQuantity)
+		logger?.log("[INFO] Trying to find out the ticket type...\n")
+        let finder = TicketFinder(targetTicketQuantity: targetTicketQuantity, targetTicketType: targetTicketType)
 		guard let ticket = finder.ticket(from: ticketType) else {
-			delegate?.didGetSeatOrTicketFailed(reason: "Could not find out any availiale ticket type\n")
+			delegate?.didGetSeatOrTicketFailed(reason: "[FAILED] Could not find out any availiale ticket type\n")
 			return
 		}
 		
-		logger?.log("Get the ticket type\n")
+		logger?.log("[SUCCESS] Get the ticket type\n")
 		ticketTypes = [ticket.toOrderTicketType(with: targetTicketQuantity)]
 		complete()
     }

@@ -56,7 +56,7 @@ class ViewController: UIViewController {
     private var components: [UIView] {
         return [textView,
                 separatorView2,
-                actionButton]
+                buttonsStackview]
     }
     
     fileprivate lazy var stackView: UIStackView = {
@@ -69,25 +69,6 @@ class ViewController: UIViewController {
         components.forEach { stackview.addArrangedSubview($0) }
         
         return stackview
-    }()
-    
-    fileprivate lazy var captchaTitle: UILabel = {
-        let label = UILabel()
-        label.text = "Captcha"
-        label.font = .systemFont(ofSize: 12, weight: .light)
-        label.textColor = .white
-        label.setContentHuggingPriority(.required, for: .vertical)
-        return label
-    }()
-    
-    fileprivate lazy var captchaTextField: UITextField = {
-        let textField = UITextField()
-        textField.addPaddingLeft(4.0)
-        textField.borderStyle = .roundedRect
-        textField.font = .systemFont(ofSize: 15, weight: .light)
-        textField.setContentHuggingPriority(.required, for: .vertical)
-        
-        return textField
     }()
     
     fileprivate lazy var sessionIdTitle: UILabel = {
@@ -135,9 +116,33 @@ class ViewController: UIViewController {
         return view
     }()
     
-    fileprivate lazy var actionButton: UIButton = {
+    fileprivate lazy var buttonsStackview: UIStackView = {
+        let stackview = UIStackView(arrangedSubviews: [startButton, backButton])
+        stackview.alignment = .fill
+        stackview.distribution = .fillEqually
+        stackview.axis = .horizontal
+        stackview.spacing = 10
+        return stackview
+    }()
+    
+    fileprivate lazy var startButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("Start".uppercased(), for: .normal)
+        button.setTitleColor(.white, for: .normal)
+        button.titleFont = .systemFont(ofSize: 18, weight: .light)
+        button.backgroundColor = UIColor.cobinhood.green
+        button.cornerRadius = 4.0
+        
+        button.snp.makeConstraints {
+            $0.height.equalTo(50)
+        }
+        
+        return button
+    }()
+    
+    fileprivate lazy var backButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setTitle("Back".uppercased(), for: .normal)
         button.setTitleColor(.white, for: .normal)
         button.titleFont = .systemFont(ofSize: 18, weight: .light)
         button.backgroundColor = UIColor.cobinhood.green
@@ -158,11 +163,19 @@ class ViewController: UIViewController {
 		viewModel.logger = self
 		self.viewModel = viewModel
         
-        actionButton.rx.tap
+        startButton.rx.tap
             .asObservable()
             .bind { [weak self] in
 				guard let self = self else { return }
 				self.viewModel.start()
+            }
+            .disposed(by: disposeBag)
+        
+        backButton.rx.tap
+            .asObservable()
+            .bind { [weak self] in
+                guard let self = self else { return }
+                self.back()
             }
             .disposed(by: disposeBag)
         
@@ -176,6 +189,28 @@ class ViewController: UIViewController {
             $0.top.equalTo(topLayoutGuide.snp.bottom).offset(24)
             $0.bottom.equalTo(bottomLayoutGuide.snp.top).offset(-24)
             $0.leading.trailing.equalToSuperview().inset(24)
+        }
+    }
+    
+    func back() {
+        if viewModel is OrderViewModel {
+            guard let memberId = member?.memberId else { return }
+            guard let movieSession = movieSession else { return }
+            let viewModel = SeatAndTicketViewModel(token: authToken, memberId: memberId, movieSession: movieSession)
+            viewModel.delegate = self
+            viewModel.logger = self
+            self.viewModel = viewModel
+            log("[INFO] Back to get seat and ticket...\n")
+            
+        } else if viewModel is SeatAndTicketViewModel {
+            let viewModel = MovieViewModel(token: authToken)
+            viewModel.delegate = self
+            viewModel.logger = self
+            self.viewModel = viewModel
+            log("[INFO] Back to get movie session...\n")
+            
+        } else {
+            return
         }
     }
 }
@@ -260,6 +295,6 @@ extension ViewController: SeatAndTicketViewModelDelegate {
 extension ViewController: OrderViewModelDelegate {
 
 	func didOrderTicketAndPaymentSuccess() {
-		log("Order ticket completes!!!")
+		log("[SUCCESS] Order ticket completed!!! 🎉🎉🎉")
 	}
 }

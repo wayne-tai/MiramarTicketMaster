@@ -10,14 +10,16 @@ import Foundation
 
 class TicketFinder {
 	
+    var targetTicketType: String
 	let targetTicketQuantity: Int
 	
-	init(targetTicketQuantity: Int) {
+    init(targetTicketQuantity: Int, targetTicketType: String) {
+        self.targetTicketType = targetTicketType
 		self.targetTicketQuantity = targetTicketQuantity
 	}
 	
 	func ticket(from ticketType: TicketType) -> TicketType.Ticket? {
-		guard let ticket = ticketType.tickets.first(where: { $0.description == "Adult" }) else { return nil }
+		guard let ticket = ticketType.tickets.first(where: { $0.description == self.targetTicketType }) else { return nil }
 		return ticket
 	}
 }
