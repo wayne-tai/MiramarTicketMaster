@@ -24,3 +24,44 @@ extension UIView {
 		}
 	}
 }
+
+extension UIView {
+    
+    enum ShadowStyle {
+        case normal
+        case light
+        
+        var shadowColor: UIColor {
+            return .black
+        }
+        
+        var shadowOffset: CGSize {
+            switch self {
+            case .normal: return CGSize(width: 2.0, height: 2.0)
+            case .light: return CGSize(width: 2.0, height: 2.0)
+            }
+        }
+        
+        var shadowRadius: CGFloat {
+            switch self {
+            case .normal: return 5.0
+            case .light: return 2.5
+            }
+        }
+        
+        var shadowOpacity: Float {
+            switch self {
+            case .normal: return 0.5
+            case .light: return 0.25
+            }
+        }
+    }
+    
+    func applyShadow(style: ShadowStyle) {
+        layer.shadowColor = style.shadowColor.cgColor
+        layer.shadowOffset = style.shadowOffset
+        layer.shadowRadius = style.shadowRadius
+        layer.shadowOpacity = style.shadowOpacity
+        clipsToBounds = false
+    }
+}

@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  SettingsViewController.swift
 //  MiramarTicketMaster
 //
 //  Created by Wayne on 2019/4/12.
@@ -8,10 +8,16 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class SettingsViewController: ViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
+
+        
     }
+    
+    private func configureLayout() {
+        navigationItem.title = "Config"
+    }
+
 }

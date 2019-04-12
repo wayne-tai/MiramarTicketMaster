@@ -52,8 +52,7 @@
 		B0AEEFE9206945ED00F743AF /* Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0AEEFE0206945ED00F743AF /* Notification.swift */; };
 		B0AEEFEC206947D300F743AF /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0AEEFEB206947D300F743AF /* Utils.swift */; };
 		B0BBFED120693E1800F59FCC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0BBFED020693E1800F59FCC /* AppDelegate.swift */; };
-		B0BBFED320693E1800F59FCC /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0BBFED220693E1800F59FCC /* ViewController.swift */; };
-		B0BBFED620693E1800F59FCC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B0BBFED420693E1800F59FCC /* Main.storyboard */; };
+		B0BBFED320693E1800F59FCC /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0BBFED220693E1800F59FCC /* MainViewController.swift */; };
 		B0BBFED820693E1800F59FCC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B0BBFED720693E1800F59FCC /* Assets.xcassets */; };
 		B0BBFEDB20693E1800F59FCC /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B0BBFED920693E1800F59FCC /* LaunchScreen.storyboard */; };
 		B0BBFEE620693E1800F59FCC /* MiramarTicketMasterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0BBFEE520693E1800F59FCC /* MiramarTicketMasterTests.swift */; };
@@ -63,6 +62,10 @@
 		B0C64A45225F42CA00B4F921 /* TicketType.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0C64A44225F42C900B4F921 /* TicketType.swift */; };
 		B0C64A47225F455700B4F921 /* TicketTypesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0C64A46225F455700B4F921 /* TicketTypesViewModel.swift */; };
 		B0C64A49225F4F0600B4F921 /* SeatAndTicketViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0C64A48225F4F0600B4F921 /* SeatAndTicketViewModel.swift */; };
+		B0C64A4B2260744800B4F921 /* NavidationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0C64A4A2260744800B4F921 /* NavidationController.swift */; };
+		B0C64A4D2260A14600B4F921 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0C64A4C2260A14600B4F921 /* SettingsViewController.swift */; };
+		B0C64A4F2260A2BB00B4F921 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0C64A4E2260A2BB00B4F921 /* ViewController.swift */; };
+		B0C64A512260A32500B4F921 /* UIBarButtonItemExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0C64A502260A32500B4F921 /* UIBarButtonItemExtensions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -122,8 +125,7 @@
 		B0AEEFEB206947D300F743AF /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		B0BBFECD20693E1800F59FCC /* MiramarTicketMaster.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MiramarTicketMaster.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B0BBFED020693E1800F59FCC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		B0BBFED220693E1800F59FCC /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		B0BBFED520693E1800F59FCC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		B0BBFED220693E1800F59FCC /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		B0BBFED720693E1800F59FCC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B0BBFEDA20693E1800F59FCC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		B0BBFEDC20693E1800F59FCC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -136,6 +138,10 @@
 		B0C64A44225F42C900B4F921 /* TicketType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TicketType.swift; sourceTree = "<group>"; };
 		B0C64A46225F455700B4F921 /* TicketTypesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicketTypesViewModel.swift; sourceTree = "<group>"; };
 		B0C64A48225F4F0600B4F921 /* SeatAndTicketViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeatAndTicketViewModel.swift; sourceTree = "<group>"; };
+		B0C64A4A2260744800B4F921 /* NavidationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavidationController.swift; sourceTree = "<group>"; };
+		B0C64A4C2260A14600B4F921 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		B0C64A4E2260A2BB00B4F921 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		B0C64A502260A32500B4F921 /* UIBarButtonItemExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIBarButtonItemExtensions.swift; sourceTree = "<group>"; };
 		CE65D4B803D56EBAFBB8B856 /* Pods_target_MiramarTicketMaster.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_target_MiramarTicketMaster.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E4E2117115D5F3F66A8776FB /* Pods-target-MiramarTicketMaster.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-target-MiramarTicketMaster.release.xcconfig"; path = "Pods/Target Support Files/Pods-target-MiramarTicketMaster/Pods-target-MiramarTicketMaster.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -237,6 +243,7 @@
 				B0AEEFB3206945D100F743AF /* UITextFieldExtensions.swift */,
 				B0AEEFB5206945D200F743AF /* UIViewExtensions.swift */,
 				B08057B4225E39530003D59B /* SingleExtensions.swift */,
+				B0C64A502260A32500B4F921 /* UIBarButtonItemExtensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -285,9 +292,11 @@
 				B0AEEFB2206945C900F743AF /* Managers */,
 				B0AEEFD7206945E000F743AF /* Extensions */,
 				B0AEEFEA206945F900F743AF /* Constants */,
-				B0BBFED220693E1800F59FCC /* ViewController.swift */,
+				B0BBFED220693E1800F59FCC /* MainViewController.swift */,
+				B0C64A4C2260A14600B4F921 /* SettingsViewController.swift */,
+				B0C64A4A2260744800B4F921 /* NavidationController.swift */,
+				B0C64A4E2260A2BB00B4F921 /* ViewController.swift */,
 				B08057CF225F9EFD0003D59B /* Config.swift */,
-				B0BBFED420693E1800F59FCC /* Main.storyboard */,
 				B0BBFED720693E1800F59FCC /* Assets.xcassets */,
 				B0BBFED920693E1800F59FCC /* LaunchScreen.storyboard */,
 				B0BBFEDC20693E1800F59FCC /* Info.plist */,
@@ -418,7 +427,6 @@
 			files = (
 				B0BBFEDB20693E1800F59FCC /* LaunchScreen.storyboard in Resources */,
 				B0BBFED820693E1800F59FCC /* Assets.xcassets in Resources */,
-				B0BBFED620693E1800F59FCC /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -513,9 +521,10 @@
 				B08057B3225E37540003D59B /* AuthToken.swift in Sources */,
 				B0AEEFC5206945D600F743AF /* UITextFieldExtensions.swift in Sources */,
 				B08057BA225E478A0003D59B /* LoginViewModel.swift in Sources */,
-				B0BBFED320693E1800F59FCC /* ViewController.swift in Sources */,
+				B0BBFED320693E1800F59FCC /* MainViewController.swift in Sources */,
 				B0AEEFD0206945D600F743AF /* RxAlamofire.swift in Sources */,
 				B0AEEFC7206945D600F743AF /* UIViewExtensions.swift in Sources */,
+				B0C64A512260A32500B4F921 /* UIBarButtonItemExtensions.swift in Sources */,
 				B08057BE225E4CD40003D59B /* MovieSession.swift in Sources */,
 				B08057B5225E39530003D59B /* SingleExtensions.swift in Sources */,
 				B0AEEFCB206945D600F743AF /* DataExtensions.swift in Sources */,
@@ -525,14 +534,17 @@
 				B08057C2225E57F20003D59B /* SeatPlan.swift in Sources */,
 				B08057C4225F826D0003D59B /* TicketFinder.swift in Sources */,
 				B0AEEFCC206945D600F743AF /* UIColorExtensions.swift in Sources */,
+				B0C64A4B2260744800B4F921 /* NavidationController.swift in Sources */,
 				B08057D0225F9EFD0003D59B /* Config.swift in Sources */,
 				B08057CC225F971F0003D59B /* Payment.swift in Sources */,
 				B08057B7225E3C0A0003D59B /* Member.swift in Sources */,
 				B0AEEFD3206945D600F743AF /* UIImageExtension.swift in Sources */,
+				B0C64A4D2260A14600B4F921 /* SettingsViewController.swift in Sources */,
 				B08057CA225F95740003D59B /* OrderViewModel.swift in Sources */,
 				B0BBFED120693E1800F59FCC /* AppDelegate.swift in Sources */,
 				B0AEEFCE206945D600F743AF /* CellExtensions.swift in Sources */,
 				B0AEEFE9206945ED00F743AF /* Notification.swift in Sources */,
+				B0C64A4F2260A2BB00B4F921 /* ViewController.swift in Sources */,
 				B0AEEFE5206945ED00F743AF /* Environments.swift in Sources */,
 				B08057C0225E53520003D59B /* MovieViewModel.swift in Sources */,
 				B08057AF225E34EA0003D59B /* NetworkService.swift in Sources */,
@@ -560,14 +572,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		B0BBFED420693E1800F59FCC /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				B0BBFED520693E1800F59FCC /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		B0BBFED920693E1800F59FCC /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
