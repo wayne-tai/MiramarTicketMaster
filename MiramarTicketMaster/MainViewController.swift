@@ -18,6 +18,12 @@ struct TargetSeatRange {
 }
 
 class MainViewController: ViewController {
+	
+	private struct Layout {
+		static let horizontalMargin = UIEdgeInsets(top: 0, left: 24, bottom: 0, right: 24)
+		static let verticalMargin = UIEdgeInsets(top: 24, left: 0, bottom: 24, right: 0)
+		static let spacing: CGFloat = 8
+	}
     
     /// Operations
 	
@@ -62,8 +68,10 @@ class MainViewController: ViewController {
 	
     private var mainComponents: [UIView] {
         return [
+			titleLabel,
+			.spacer(.horizontal(Layout.spacing)),
             taskStateView,
-            .spacer(.horizontal(8)),
+            .spacer(.horizontal(Layout.spacing)),
             buttonsStackview
         ]
     }
@@ -76,6 +84,15 @@ class MainViewController: ViewController {
         stackview.spacing = 4.0
         return stackview
     }()
+	
+	fileprivate lazy var titleLabel: UILabel = {
+		let label = Label()
+		label.text = "Tasks"
+		label.textColor = .black
+		label.font = .defaultDisplayFont(ofSize: 36, weight: .bold)
+		label.margin = Layout.horizontalMargin
+		return label
+	}()
 	
 	fileprivate lazy var taskStateView: TaskStateView = {
 		let view = TaskStateView(with: tasks)
@@ -127,7 +144,7 @@ class MainViewController: ViewController {
         stackview.axis = .horizontal
         stackview.spacing = 10
 		stackview.isLayoutMarginsRelativeArrangement = true
-		stackview.layoutMargins = UIEdgeInsets(top: 0, left: 24, bottom: 0, right: 24)
+		stackview.layoutMargins = Layout.horizontalMargin
         return stackview
     }()
     
@@ -182,8 +199,8 @@ class MainViewController: ViewController {
         
         view.addSubview(stackView)
         stackView.snp.makeConstraints {
-            $0.top.equalTo(topLayoutGuide.snp.bottom).offset(24)
-            $0.bottom.equalTo(bottomLayoutGuide.snp.top).offset(-24)
+            $0.top.equalTo(topLayoutGuide.snp.bottom).offset(Layout.verticalMargin.top)
+            $0.bottom.equalTo(bottomLayoutGuide.snp.top).offset(-Layout.verticalMargin.bottom)
             $0.leading.trailing.equalToSuperview()
         }
     }
@@ -227,12 +244,15 @@ class MainViewController: ViewController {
             viewModel.delegate = self
             self.viewModel = viewModel
             log.info("[INFO] Back to get seat and ticket...\n")
+			taskStateView.update(state: .waiting, forTaskAtIndexPath: IndexPath(indexes: [3, 0]))
+			taskStateView.update(state: .waiting, forTaskAtIndexPath: IndexPath(indexes: [3, 1]))
             
         } else if viewModel is SeatAndTicketViewModel {
             let viewModel = MovieViewModel(token: authToken)
             viewModel.delegate = self
             self.viewModel = viewModel
             log.info("[INFO] Back to get movie session...\n")
+			taskStateView.update(state: .waiting, forTaskAtIndexPath: IndexPath(index: 2))
             
         } else {
             return
@@ -265,25 +285,21 @@ extension MainViewController {
 
 extension MainViewController: LoginViewModelDelegate {
 	func isGoingToGetAuthToken() {
-		let task = tasks[0]
-		task.state = .running
+		taskStateView.update(state: .running, forTaskAtIndexPath: IndexPath(index: 0))
 	}
 
 	func didAuthTokenGetSucceed(token: String) {
 		self.authToken = token
-		let task = tasks[0]
-		task.state = .success
+		taskStateView.update(state: .success, forTaskAtIndexPath: IndexPath(index: 0))
 	}
 	
 	func isGoingToLogin() {
-		let task = tasks[1]
-		task.state = .running
+		taskStateView.update(state: .running, forTaskAtIndexPath: IndexPath(index: 1))
 	}
 	
 	func didLoginCompleted(with token: String, member: Member) {
         self.member = member
-		let task = tasks[1]
-		task.state = .success
+		taskStateView.update(state: .success, forTaskAtIndexPath: IndexPath(index: 1))
         
 		let viewModel = MovieViewModel(token: token)
 		viewModel.delegate = self
@@ -293,14 +309,12 @@ extension MainViewController: LoginViewModelDelegate {
 
 extension MainViewController: MovieViewModelDelegate {
 	func isGoingToGetMovieSession() {
-		let task = tasks[2]
-		task.state = .running
+		taskStateView.update(state: .running, forTaskAtIndexPath: IndexPath(index: 2))
 	}
 	
 	func didGetMovieSession(movieSession: MovieSession) {
 		self.movieSession = movieSession
-		let task = tasks[2]
-		task.state = .success
+		taskStateView.update(state: .success, forTaskAtIndexPath: IndexPath(index: 2))
         
         guard let memberId = member?.memberId else { return }
         let viewModel = SeatAndTicketViewModel(token: authToken, memberId: memberId, movieSession: movieSession)
@@ -311,23 +325,19 @@ extension MainViewController: MovieViewModelDelegate {
 
 extension MainViewController: SeatAndTicketViewModelDelegate {
 	func willGetSeatPlan() {
-		let task = (tasks[3] as! TaskStateView.MultipleTask).subtasks[0]
-		task.state = .running
+		taskStateView.update(state: .running, forTaskAtIndexPath: IndexPath(indexes: [3, 0]))
 	}
 	
 	func didGetSeats() {
-		let task = (tasks[3] as! TaskStateView.MultipleTask).subtasks[0]
-		task.state = .success
+		taskStateView.update(state: .success, forTaskAtIndexPath: IndexPath(indexes: [3, 0]))
 	}
 	
 	func willGetTicketType() {
-		let task = (tasks[3] as! TaskStateView.MultipleTask).subtasks[1]
-		task.state = .running
+		taskStateView.update(state: .running, forTaskAtIndexPath: IndexPath(indexes: [3, 1]))
 	}
 	
 	func didGetTicketTypes() {
-		let task = (tasks[3] as! TaskStateView.MultipleTask).subtasks[1]
-		task.state = .success
+		taskStateView.update(state: .success, forTaskAtIndexPath: IndexPath(indexes: [3, 1]))
 	}
 	
 	func didTasksCompleted(seats: [Order.SelectedSeat], ticketTypes: [Order.TicketType], sessionId: String) {
@@ -353,23 +363,19 @@ extension MainViewController: SeatAndTicketViewModelDelegate {
 
 extension MainViewController: OrderViewModelDelegate {
 	func willOrderTicket() {
-		let task = tasks[4]
-		task.state = .running
+		taskStateView.update(state: .running, forTaskAtIndexPath: IndexPath(index: 4))
 	}
 	
 	func didTicketOrdered() {
-		let task = tasks[4]
-		task.state = .success
+		taskStateView.update(state: .success, forTaskAtIndexPath: IndexPath(index: 4))
 	}
 	
 	func willGetOrderPayment() {
-		let task = tasks[5]
-		task.state = .running
+		taskStateView.update(state: .running, forTaskAtIndexPath: IndexPath(index: 5))
 	}
 	
 	func didGetOrderPayment() {
-		let task = tasks[5]
-		task.state = .success
+		taskStateView.update(state: .success, forTaskAtIndexPath: IndexPath(index: 5))
 		log.info("[SUCCESS] Order ticket completed!!! 🎉🎉🎉")
 	}
 }

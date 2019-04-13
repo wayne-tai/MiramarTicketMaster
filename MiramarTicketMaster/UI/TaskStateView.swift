@@ -63,6 +63,20 @@ class TaskStateView: UIView {
 			}
 		}
 	}
+	
+	func update(state: Task.State, forTaskAtIndexPath indexPath: IndexPath) {
+		guard let first = indexPath.first else { return }
+		guard let task = tasks.item(at: first) else { return }
+		if let multipleTask = task as? MultipleTask {
+			if indexPath.count > 1 {
+				let newIndexPath = indexPath[1...]
+				guard let second = newIndexPath.first else { return }
+				multipleTask.subtasks.item(at: second)?.state = state
+				return
+			}
+		}
+		task.state = state
+	}
 }
 
 extension TaskStateView {
