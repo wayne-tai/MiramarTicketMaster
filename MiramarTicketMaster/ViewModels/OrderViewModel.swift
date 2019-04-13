@@ -13,7 +13,7 @@ protocol OrderViewModelDelegate: AnyObject {
 	func didTicketOrdered()
 	
 	func willGetOrderPayment()
-	func didGetOrderPayment()
+	func didGetOrderPayment(orderedTicket: OrderTicket)
 }
 
 class OrderViewModel: ViewModel {
@@ -68,7 +68,7 @@ class OrderViewModel: ViewModel {
 		timer?.resume()
 	}
 	
-	private func startOrderPayment() {
+	private func startOrderPayment(with orderTicket: OrderTicket) {
 		timer?.cancel()
 		
 		timer = DispatchSource.makeTimerSource(queue: timerQueue)
@@ -76,7 +76,7 @@ class OrderViewModel: ViewModel {
 		
 		timer?.setEventHandler { [weak self] in
 			guard let self = self else { return }
-			self.orderPayment()
+			self.orderPayment(with: orderTicket)
 		}
 		
 		timer?.resume()
@@ -103,16 +103,17 @@ class OrderViewModel: ViewModel {
 					self.sessionId = orderTicket.data.order.userSessionId
 					
 					self.delegate?.didTicketOrdered()
-					self.startOrderPayment()
+					self.startOrderPayment(with: orderTicket)
 					
 				case .error(let error):
 					log.info("[FAILED] Order ticket failed...")
 					log.info("[ERROR] \(error.localizedDescription)")
+					log.error(error)
 				}
 		}
 	}
 	
-	func orderPayment() {
+	func orderPayment(with orderTicket: OrderTicket) {
 		log.info("[INFO] Preparing to order payment...")
 		delegate?.willGetOrderPayment()
 		
@@ -137,7 +138,7 @@ class OrderViewModel: ViewModel {
 					log.info("[SUCCESS] Order payment success!")
 					log.info("============================")
 					self.stop()
-					self.delegate?.didGetOrderPayment()
+					self.delegate?.didGetOrderPayment(orderedTicket: orderTicket)
 					
 				case .error(let error):
 					log.info("[FAILED] Order payment failed...")

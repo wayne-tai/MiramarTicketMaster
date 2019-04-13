@@ -38,7 +38,6 @@ class MainViewController: ViewController {
 	var authToken: String = ""
     var member: Member?
 	var movieSession: MovieSession?
-    var seatPlan: SeatPlan?
 	
 	let tasks: [TaskStateView.Task] = [
 		TaskStateView.Task.waiting(task: "Get auth token"),
@@ -152,7 +151,7 @@ class MainViewController: ViewController {
         let button = UIButton(type: .system)
         button.setTitle("Start".uppercased(), for: .normal)
         button.setTitleColor(.white, for: .normal)
-        button.titleFont = .systemFont(ofSize: 18, weight: .light)
+        button.titleFont = .defaultDisplayFont(ofSize: 18, weight: .light)
         button.backgroundColor = UIColor.cobinhood.green
         button.cornerRadius = 4.0
         button.applyShadow(style: .light)
@@ -168,7 +167,7 @@ class MainViewController: ViewController {
         let button = UIButton(type: .system)
         button.setTitle("Back".uppercased(), for: .normal)
         button.setTitleColor(.white, for: .normal)
-        button.titleFont = .systemFont(ofSize: 18, weight: .light)
+        button.titleFont = .defaultDisplayFont(ofSize: 18, weight: .light)
         button.backgroundColor = UIColor.cobinhood.green
         button.cornerRadius = 4.0
         button.applyShadow(style: .light)
@@ -374,8 +373,12 @@ extension MainViewController: OrderViewModelDelegate {
 		taskStateView.update(state: .running, forTaskAtIndexPath: IndexPath(index: 5))
 	}
 	
-	func didGetOrderPayment() {
+	func didGetOrderPayment(orderedTicket: OrderTicket) {
 		taskStateView.update(state: .success, forTaskAtIndexPath: IndexPath(index: 5))
 		log.info("[SUCCESS] Order ticket completed!!! 🎉🎉🎉")
+		
+		let viewModel = OrderResultViewModel(orderTicket: orderedTicket)
+		let vc = OrderResultViewController(with: viewModel)
+		present(vc, animated: true, completion: nil)
 	}
 }

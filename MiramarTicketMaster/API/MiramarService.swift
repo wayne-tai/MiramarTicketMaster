@@ -77,6 +77,10 @@ class MiramarService: NetworkService {
 		]
 		let params = order.dictionaryValue
 		return request(.post, urlString: path, parameters: params, encoding: .json, headers: headers)
+			.do(onNext: { (data) in
+				let json = try JSONSerialization.jsonObject(with: data, options: .allowFragments)
+				log.info(json)
+			})
 			.map { try $0.decode() }
 	}
 	
@@ -87,6 +91,10 @@ class MiramarService: NetworkService {
 		]
 		let params = payment.dictionaryValue
 		return request(.post, urlString: path, parameters: params, encoding: .json, headers: headers)
+			.do(onNext: { (data) in
+				let json = try JSONSerialization.jsonObject(with: data, options: .allowFragments)
+				log.info(json)
+			})
 			.map { try $0.decode() }
 	}
 }
