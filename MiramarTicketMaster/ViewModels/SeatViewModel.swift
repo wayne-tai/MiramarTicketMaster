@@ -9,6 +9,7 @@
 import Foundation
 
 protocol SeatViewModelDelegate: AnyObject {
+	func willGetSeatPlan()
     func didGetSeatPlan(seatPlan: SeatPlan, movieSessionId: String)
 }
 
@@ -47,22 +48,23 @@ class SeatViewModel: ViewModel {
     }
     
     func getSeatPlan() {
-        logger?.log("[INFO] Get seat plan...\n")
+        log.info("[INFO] Get seat plan...")
+		delegate?.willGetSeatPlan()
         _ = network.getSeatPlan(with: authToken, movieSessionId: movieSessionId)
             .subscribe { [weak self] (event) in
                 guard let self = self else { return }
                 switch event {
                 case .success(let seatPlan):
 					guard seatPlan.result == 1 else { return }
-                    self.logger?.log("[SUCCESS] Get seat plan success!\n")
-                    self.logger?.log("============================\n\n")
+                    log.info("[SUCCESS] Get seat plan success!")
+                    log.info("============================")
                     self.timer?.cancel()
                     self.timer = nil
                     self.delegate?.didGetSeatPlan(seatPlan: seatPlan, movieSessionId: self.movieSessionId)
                     
                 case .error(let error):
-                    self.logger?.log("[FAILED] Get seat plan failed...\n")
-                    self.logger?.log("[ERROR] \(error.localizedDescription)\n")
+                    log.info("[FAILED] Get seat plan failed...")
+                    log.info("[ERROR] \(error.localizedDescription)")
                 }
         }
     }

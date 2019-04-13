@@ -75,6 +75,21 @@ extension TaskStateView {
 		
 		private weak var task: Task!
 		
+		private lazy var stackview: UIStackView = {
+			let stackview = UIStackView(arrangedSubviews: [checkboxImageView, taskLabel])
+			stackview.alignment = .fill
+			stackview.distribution = .fillProportionally
+			stackview.axis = .horizontal
+			stackview.spacing = 10
+			return stackview
+		}()
+		
+		private lazy var checkboxImageView: UIImageView = {
+			let imageView = UIImageView(image: UIImage(named: "check.box.empty")?.templateRendered)
+			imageView.tintColor = task.textColors[task.state]
+			return imageView
+		}()
+		
 		private lazy var taskLabel: UILabel = {
 			let label = UILabel()
 			label.text = task.task
@@ -99,8 +114,8 @@ extension TaskStateView {
 			layer.cornerRadius = 4.0
 			applyShadow(style: .light)
 			
-			addSubview(taskLabel)
-			taskLabel.snp.makeConstraints { (maker) in
+			addSubview(stackview)
+			stackview.snp.makeConstraints { (maker) in
 				maker.center.equalToSuperview()
 				maker.top.greaterThanOrEqualToSuperview().inset(Layout.margins.top).priority(999)
 				maker.bottom.greaterThanOrEqualToSuperview().inset(Layout.margins.bottom).priority(999)
@@ -108,10 +123,26 @@ extension TaskStateView {
 			
 			task.stateChangeHandler = { [weak self] state in
 				guard let self = self else { return }
-				UIView.animate(withDuration: 0.25, delay: 0.1, options: .curveEaseInOut, animations: {
-					self.backgroundColor = task.stateColors[task.state]
-					self.taskLabel.textColor = task.textColors[task.state]
-				}, completion: nil)
+				DispatchQueue.main.async {
+					UIView.transition(with: self.taskLabel, duration: 0.25, options: .curveEaseInOut, animations: {
+						self.taskLabel.textColor = task.textColors[task.state]
+					}, completion: nil)
+					
+					UIView.animate(withDuration: 0.25, delay: 0.0, options: .curveEaseInOut, animations: {
+						self.backgroundColor = task.stateColors[task.state]
+						self.checkboxImageView.tintColor = task.textColors[task.state]
+						self.checkboxImageView.image = self.image(for: task)
+					}, completion: nil)
+				}
+			}
+		}
+		
+		private func image(for task: Task) -> UIImage? {
+			switch task.state {
+			case .success:
+				return UIImage(named: "check.box.checked")?.templateRendered
+			default:
+				return UIImage(named: "check.box.empty")?.templateRendered
 			}
 		}
 	}
@@ -161,7 +192,12 @@ extension TaskStateView {
 	
 	class Task {
 		let task: String
-		var state: State { didSet { stateChangeHandler?(state) } }
+		var state: State {
+			didSet {
+				guard state != oldValue else { return }
+				stateChangeHandler?(state)
+			}
+		}
 		let stateColors: [State: UIColor]
 		let textColors: [State: UIColor]
 		var stateChangeHandler: ((State) -> Void)?
@@ -176,6 +212,10 @@ extension TaskStateView {
 	
 	class MultipleTask: Task {
 		var subtasks: [Task] = []
+		
+		override var state: TaskStateView.Task.State {
+			didSet { subtasks.forEach { $0.state = state } }
+		}
 	}
 }
 

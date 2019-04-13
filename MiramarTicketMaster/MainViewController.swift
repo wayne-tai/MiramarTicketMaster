@@ -41,7 +41,9 @@ class MainViewController: ViewController {
 		TaskStateView.MultipleTask.waiting(tasks: [
 			TaskStateView.Task.waiting(task: "Get seats"),
 			TaskStateView.Task.waiting(task: "Get tickets"),
-		])
+		]),
+		TaskStateView.Task.waiting(task: "Order ticket"),
+		TaskStateView.Task.waiting(task: "Get order payment"),
 	]
 	
     /// Others
@@ -171,7 +173,6 @@ class MainViewController: ViewController {
     private func initialize() {
         let viewModel = LoginViewModel()
         viewModel.delegate = self
-        viewModel.logger = self
         self.viewModel = viewModel
     }
     
@@ -224,16 +225,14 @@ class MainViewController: ViewController {
             guard let movieSession = movieSession else { return }
             let viewModel = SeatAndTicketViewModel(token: authToken, memberId: memberId, movieSession: movieSession)
             viewModel.delegate = self
-            viewModel.logger = self
             self.viewModel = viewModel
-            log("[INFO] Back to get seat and ticket...\n")
+            log.info("[INFO] Back to get seat and ticket...\n")
             
         } else if viewModel is SeatAndTicketViewModel {
             let viewModel = MovieViewModel(token: authToken)
             viewModel.delegate = self
-            viewModel.logger = self
             self.viewModel = viewModel
-            log("[INFO] Back to get movie session...\n")
+            log.info("[INFO] Back to get movie session...\n")
             
         } else {
             return
@@ -264,12 +263,6 @@ extension MainViewController {
     }
 }
 
-extension MainViewController: ViewModelLogger {
-	func log(_ text: String) {
-		screenLogger.log(text)
-	}
-}
-
 extension MainViewController: LoginViewModelDelegate {
 	func isGoingToGetAuthToken() {
 		let task = tasks[0]
@@ -294,31 +287,50 @@ extension MainViewController: LoginViewModelDelegate {
         
 		let viewModel = MovieViewModel(token: token)
 		viewModel.delegate = self
-		viewModel.logger = self
 		self.viewModel = viewModel
 	}
 }
 
 extension MainViewController: MovieViewModelDelegate {
+	func isGoingToGetMovieSession() {
+		let task = tasks[2]
+		task.state = .running
+	}
+	
 	func didGetMovieSession(movieSession: MovieSession) {
 		self.movieSession = movieSession
+		let task = tasks[2]
+		task.state = .success
         
         guard let memberId = member?.memberId else { return }
         let viewModel = SeatAndTicketViewModel(token: authToken, memberId: memberId, movieSession: movieSession)
 		viewModel.delegate = self
-		viewModel.logger = self
         self.viewModel = viewModel
 	}
 }
 
 extension MainViewController: SeatAndTicketViewModelDelegate {
-	
-	func didGetSeatOrTicketFailed(reason: String) {
-		log(reason)
+	func willGetSeatPlan() {
+		let task = (tasks[3] as! TaskStateView.MultipleTask).subtasks[0]
+		task.state = .running
 	}
 	
-
-	func didGetSeatAndTicket(seats: [Order.SelectedSeat], ticketTypes: [Order.TicketType], sessionId: String) {
+	func didGetSeats() {
+		let task = (tasks[3] as! TaskStateView.MultipleTask).subtasks[0]
+		task.state = .success
+	}
+	
+	func willGetTicketType() {
+		let task = (tasks[3] as! TaskStateView.MultipleTask).subtasks[1]
+		task.state = .running
+	}
+	
+	func didGetTicketTypes() {
+		let task = (tasks[3] as! TaskStateView.MultipleTask).subtasks[1]
+		task.state = .success
+	}
+	
+	func didTasksCompleted(seats: [Order.SelectedSeat], ticketTypes: [Order.TicketType], sessionId: String) {
 		guard let member = member else { return }
 		let order = Order()
 		order.memberId = member.memberId
@@ -329,15 +341,35 @@ extension MainViewController: SeatAndTicketViewModelDelegate {
 		order.sessionId = sessionId
 		
 		let viewModel = OrderViewModel(token: authToken, member: member, order: order)
-		viewModel.logger = self
 		viewModel.delegate = self
 		self.viewModel = viewModel
+	}
+	
+	func didTaskFailed() {
+		let task = tasks[3]
+		task.state = .failed
 	}
 }
 
 extension MainViewController: OrderViewModelDelegate {
-
-	func didOrderTicketAndPaymentSuccess() {
-		log("[SUCCESS] Order ticket completed!!! 🎉🎉🎉")
+	func willOrderTicket() {
+		let task = tasks[4]
+		task.state = .running
+	}
+	
+	func didTicketOrdered() {
+		let task = tasks[4]
+		task.state = .success
+	}
+	
+	func willGetOrderPayment() {
+		let task = tasks[5]
+		task.state = .running
+	}
+	
+	func didGetOrderPayment() {
+		let task = tasks[5]
+		task.state = .success
+		log.info("[SUCCESS] Order ticket completed!!! 🎉🎉🎉")
 	}
 }

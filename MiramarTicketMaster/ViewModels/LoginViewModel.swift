@@ -41,6 +41,7 @@ class LoginViewModel: ViewModel {
 	
 	func getAuthToken() {
 		log.info("[INFO] Get auth token...")
+		delegate?.isGoingToGetAuthToken()
 		_ = network.getAuthToken()
 			.subscribe { [weak self] (event) in
 				guard let self = self else { return }
@@ -63,6 +64,7 @@ class LoginViewModel: ViewModel {
 	
 	func login(with token: String) {
 		log.info("[INFO] Trying to login...")
+		delegate?.isGoingToLogin()
 		_ = network.login(with: token, sessionId: sessionId)
 			.subscribe { [weak self] (event) in
 				guard let self = self else { return }
