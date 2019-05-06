@@ -9,8 +9,14 @@
 import Foundation
 
 protocol SeatAndTicketViewModelDelegate: AnyObject {
-	func didGetSeatAndTicket(seats: [Order.SelectedSeat], ticketTypes: [Order.TicketType], sessionId: String)
-	func didGetSeatOrTicketFailed(reason: String)
+	func willGetSeatPlan()
+	func didGetSeats()
+	
+	func willGetTicketType()
+	func didGetTicketTypes()
+	
+	func didTasksCompleted(seats: [Order.SelectedSeat], ticketTypes: [Order.TicketType], sessionId: String)
+	func didTaskFailed()
 }
 
 class SeatAndTicketViewModel: ViewModel {
@@ -58,11 +64,12 @@ class SeatAndTicketViewModel: ViewModel {
     }
     
     func start() {
-        logger?.log("[INFO] Trying to get the best movie session...\n")
+        log.info("[INFO] Trying to get the best movie session...")
         var optionalSession: MovieSession.ShowDate.Movie.Screen.Session?
         while optionalSession == nil {
             guard let targetDate = targetMovieDateTimes.first else {
-				delegate?.didGetSeatOrTicketFailed(reason: "[FAILED] No more movie sessions in target dates could be selected\n")
+				delegate?.didTaskFailed()
+				log.info("[FAILED] No more movie sessions in target dates could be selected")
 				return
 			}
 			
@@ -70,8 +77,8 @@ class SeatAndTicketViewModel: ViewModel {
             optionalSession = finder.session(from: &self.movieSession, forTargetDate: targetDate)
             
             if let session = optionalSession {
-                logger?.log("[SUCCESS] Get the best movie session \(session.sessionId), at time \(session.showtime)\n")
-                logger?.log("============================\n\n")
+                log.info("[SUCCESS] Get the best movie session \(session.sessionId), at time \(session.showtime)")
+                log.info("============================")
 				selectedSession = session
                 break
             } else {
@@ -80,21 +87,20 @@ class SeatAndTicketViewModel: ViewModel {
         }
         
         guard let session = optionalSession else {
-            delegate?.didGetSeatOrTicketFailed(reason: "[FAILED] No movie session could be choose\n")
+			delegate?.didTaskFailed()
+            log.info("[FAILED] No movie session could be choose")
             return
         }
         
         if selectedSeats.isEmpty {
             seatViewModel = SeatViewModel(token: authToken, movieSessionId: session.sessionId)
             seatViewModel?.delegate = self
-            seatViewModel?.logger = self.logger
             seatViewModel?.start()
         }
         
         if ticketTypes.isEmpty {
             ticketViewModel = TicketTypesViewModel(token: authToken, memberId: memberId, movieSessionId: session.sessionId)
             ticketViewModel?.delegate = self
-            ticketViewModel?.logger = self.logger
             ticketViewModel?.start()
         }
     }
@@ -103,25 +109,33 @@ class SeatAndTicketViewModel: ViewModel {
 		guard !selectedSeats.isEmpty else { return }
 		guard !ticketTypes.isEmpty else { return }
 		
-		delegate?.didGetSeatAndTicket(seats: selectedSeats, ticketTypes: ticketTypes, sessionId: selectedSession!.sessionId)
+		delegate?.didTasksCompleted(
+			seats: selectedSeats,
+			ticketTypes: ticketTypes,
+			sessionId: selectedSession!.sessionId)
 	}
     
 }
 
 extension SeatAndTicketViewModel: SeatViewModelDelegate {
+	func willGetSeatPlan() {
+		delegate?.willGetSeatPlan()
+	}
+	
     func didGetSeatPlan(seatPlan: SeatPlan, movieSessionId: String) {
-        logger?.log("[INFO] Trying to get the best seats...\n")
+        log.info("[INFO] Trying to get the best seats...")
         let finder = SeatFinder(targetSeats: targetSeats, targetTicketQuantity: targetTicketQuantity)
         let seats = finder.seats(from: seatPlan)
         
         if !seats.isEmpty, let areaCategoryCode = seatPlan.areas.first?.areaCategoryCode {
-            logger?.log("[SUCCESS] Get the best seats \(seats.map { $0.id })\n")
-            logger?.log("============================\n\n")
+            log.info("[SUCCESS] Get the best seats \(seats.map { $0.id })")
+            log.info("============================")
 			selectedSeats = seats.map { $0.toSelectedSeat(with: areaCategoryCode) }
+			delegate?.didGetSeats()
 			complete()
         } else {
-            logger?.log("[INFO] No seats could be found in current movie session...\n")
-            logger?.log("[INFO] Fallback to get another movie session...\n")
+            log.info("[INFO] No seats could be found in current movie session...")
+            log.info("[INFO] Fallback to get another movie session...")
             selectedSeats = []
             start()
         }
@@ -129,17 +143,22 @@ extension SeatAndTicketViewModel: SeatViewModelDelegate {
 }
 
 extension SeatAndTicketViewModel: TicketTypesViewModelDelegate {
+	func willGetTicketType() {
+		delegate?.willGetTicketType()
+	}
     
     func didGetTicketType(ticketType: TicketType) {
-		logger?.log("[INFO] Trying to find out the ticket type...\n")
+		log.info("[INFO] Trying to find out the ticket type...")
         let finder = TicketFinder(targetTicketQuantity: targetTicketQuantity, targetTicketType: targetTicketType)
 		guard let ticket = finder.ticket(from: ticketType) else {
-			delegate?.didGetSeatOrTicketFailed(reason: "[FAILED] Could not find out any availiale ticket type\n")
+			log.info("[FAILED] Could not find out any availiale ticket type")
+			delegate?.didTaskFailed()
 			return
 		}
 		
-		logger?.log("[SUCCESS] Get the ticket type\n")
+		log.info("[SUCCESS] Get the ticket type")
 		ticketTypes = [ticket.toOrderTicketType(with: targetTicketQuantity)]
+		delegate?.didGetTicketTypes()
 		complete()
     }
 }

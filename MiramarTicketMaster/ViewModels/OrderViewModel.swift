@@ -9,7 +9,11 @@
 import Foundation
 
 protocol OrderViewModelDelegate: AnyObject {
-	func didOrderTicketAndPaymentSuccess()
+	func willOrderTicket()
+	func didTicketOrdered()
+	
+	func willGetOrderPayment()
+	func didGetOrderPayment(orderedTicket: OrderTicket)
 }
 
 class OrderViewModel: ViewModel {
@@ -64,7 +68,7 @@ class OrderViewModel: ViewModel {
 		timer?.resume()
 	}
 	
-	private func startOrderPayment() {
+	private func startOrderPayment(with orderTicket: OrderTicket) {
 		timer?.cancel()
 		
 		timer = DispatchSource.makeTimerSource(queue: timerQueue)
@@ -72,7 +76,7 @@ class OrderViewModel: ViewModel {
 		
 		timer?.setEventHandler { [weak self] in
 			guard let self = self else { return }
-			self.orderPayment()
+			self.orderPayment(with: orderTicket)
 		}
 		
 		timer?.resume()
@@ -84,28 +88,35 @@ class OrderViewModel: ViewModel {
 	}
 	
 	func orderTicket() {
-		logger?.log("[INFO] Preparing to order a ticker...\n")
+		log.info("[INFO] Preparing to order a ticker...")
+		delegate?.willOrderTicket()
+		
 		_ = network.orderTicker(with: authToken, order: order)
 			.subscribe { [weak self] (event) in
 				guard let self = self else { return }
 				switch event {
 				case .success(let orderTicket):
 					guard orderTicket.result == 1 else { return } 
-					self.logger?.log("[SUCCESS] Order ticket success!\n")
-					self.logger?.log("============================\n\n")
+					log.info("[SUCCESS] Order ticket success!")
+					log.info("============================")
 					self.stop()
 					self.sessionId = orderTicket.data.order.userSessionId
-					self.startOrderPayment()
+					
+					self.delegate?.didTicketOrdered()
+					self.startOrderPayment(with: orderTicket)
 					
 				case .error(let error):
-					self.logger?.log("[FAILED] Order ticket failed...\n")
-					self.logger?.log("[ERROR] \(error.localizedDescription)\n")
+					log.info("[FAILED] Order ticket failed...")
+					log.info("[ERROR] \(error.localizedDescription)")
+					log.error(error)
 				}
 		}
 	}
 	
-	func orderPayment() {
-		logger?.log("[INFO] Preparing to order payment...\n")
+	func orderPayment(with orderTicket: OrderTicket) {
+		log.info("[INFO] Preparing to order payment...")
+		delegate?.willGetOrderPayment()
+		
 		let quantity = Int(order.ticketTypes.first!.qty)!
 		let value = Int(order.ticketTypes.first!.priceInCents)!
 		let paymentValue = quantity * value
@@ -124,14 +135,14 @@ class OrderViewModel: ViewModel {
 				switch event {
 				case .success(let orderPayment):
 					guard orderPayment.result == 1 else { return }
-					self.logger?.log("[SUCCESS] Order payment success!\n")
-					self.logger?.log("============================\n\n")
+					log.info("[SUCCESS] Order payment success!")
+					log.info("============================")
 					self.stop()
-					self.delegate?.didOrderTicketAndPaymentSuccess()
+					self.delegate?.didGetOrderPayment(orderedTicket: orderTicket)
 					
 				case .error(let error):
-					self.logger?.log("[FAILED] Order payment failed...\n")
-					self.logger?.log("[ERROR] \(error.localizedDescription)\n")
+					log.info("[FAILED] Order payment failed...")
+					log.info("[ERROR] \(error.localizedDescription)")
 				}
 		}
 	}

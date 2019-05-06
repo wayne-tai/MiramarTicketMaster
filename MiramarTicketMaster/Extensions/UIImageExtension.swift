@@ -148,8 +148,12 @@ extension UIImage {
 
 extension UIImage {
 	
-	internal var originalRender: UIImage {
+	internal var originalRendered: UIImage {
 		return self.withRenderingMode(.alwaysOriginal)
+	}
+	
+	internal var templateRendered: UIImage {
+		return withRenderingMode(.alwaysTemplate)
 	}
 }
 

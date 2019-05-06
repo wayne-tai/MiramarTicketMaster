@@ -10,6 +10,7 @@ import Foundation
 import RxSwift
 
 protocol TicketTypesViewModelDelegate: AnyObject {
+	func willGetTicketType()
     func didGetTicketType(ticketType: TicketType)
 }
 
@@ -50,22 +51,22 @@ class TicketTypesViewModel: ViewModel {
     }
     
     func getTicketTypes() {
-        logger?.log("[INFO] Get ticket types...\n")
+        log.info("[INFO] Get ticket types...")
         _ = network.getTicketTypes(with: authToken, memberId: memberId, movieSessionId: movieSessionId)
             .subscribe { [weak self] (event) in
                 guard let self = self else { return }
                 switch event {
                 case .success(let ticketTypes):
 					guard ticketTypes.result == 1 else { return }
-                    self.logger?.log("[SUCCESS] Get ticket types success!\n")
-                    self.logger?.log("============================\n\n")
+                    log.info("[SUCCESS] Get ticket types success!")
+                    log.info("============================")
                     self.timer?.cancel()
                     self.timer = nil
                     self.delegate?.didGetTicketType(ticketType: ticketTypes)
                     
                 case .error(let error):
-                    self.logger?.log("[FAILED] Get ticket types failed...\n")
-                    self.logger?.log("[ERROR] \(error.localizedDescription)\n")
+                    log.info("[FAILED] Get ticket types failed...")
+                    log.info("[ERROR] \(error.localizedDescription)")
                 }
         }
     }

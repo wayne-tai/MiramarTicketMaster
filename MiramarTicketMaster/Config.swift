@@ -34,8 +34,8 @@ struct Config {
 	
 	var targetMovieDateTimes: [Date] = {
 		let dateTimeStrings = [
-			"2019-04-27T20:30:00",
-			"2019-04-28T20:30:00"
+			"2019-05-01T10:30:00",
+			"2019-04-30T10:30:00"
 		]
 		return dateTimeStrings.compactMap { $0.date }
 	}()

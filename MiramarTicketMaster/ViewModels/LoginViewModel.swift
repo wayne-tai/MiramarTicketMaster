@@ -9,6 +9,9 @@
 import Foundation
 
 protocol LoginViewModelDelegate: AnyObject {
+	func isGoingToGetAuthToken()
+	func didAuthTokenGetSucceed(token: String)
+	func isGoingToLogin()
 	func didLoginCompleted(with token: String, member: Member)
 }
 
@@ -37,47 +40,44 @@ class LoginViewModel: ViewModel {
 	}
 	
 	func getAuthToken() {
-		logger?.log("[INFO] Get auth token...\n")
+		log.info("[INFO] Get auth token...")
+		delegate?.isGoingToGetAuthToken()
 		_ = network.getAuthToken()
 			.subscribe { [weak self] (event) in
 				guard let self = self else { return }
 				switch event {
 				case .success(let authToken):
 					guard authToken.result == 1 else { return }
-					self.logger?.log("[SUCCESS] Get auth token success!\n")
-					self.logger?.log("============================\n\n")
+					log.info("[SUCCESS] Get auth token success!")
+					log.info("============================")
 					self.authToken = authToken.token
 					self.login(with: authToken.token)
-                    if let allCookies = HTTPCookieStorage.shared.cookies {
-                        for cookie in allCookies {
-                            self.logger?.log(cookie.description)
-                            log.info(cookie)
-                        }
-                    }
+					self.delegate?.didAuthTokenGetSucceed(token: authToken.token)
 					
 				case .error(let error):
-					self.logger?.log("[FAILED] Get auth token failed...\n")
-					self.logger?.log("[ERROR] \(error.localizedDescription)\n")
+					log.info("[FAILED] Get auth token failed...")
+					log.info("[ERROR] \(error.localizedDescription)")
                     self.getAuthToken()
 				}
 		}
 	}
 	
 	func login(with token: String) {
-		logger?.log("[INFO] Trying to login...\n")
+		log.info("[INFO] Trying to login...")
+		delegate?.isGoingToLogin()
 		_ = network.login(with: token, sessionId: sessionId)
 			.subscribe { [weak self] (event) in
 				guard let self = self else { return }
 				switch event {
 				case .success(let member):
 					guard member.result == 1 else { return }
-					self.logger?.log("[SUCCESS] Login success!\n")
-					self.logger?.log("============================\n\n")
+					log.info("[SUCCESS] Login success!")
+					log.info("============================")
 					self.delegate?.didLoginCompleted(with: self.authToken, member: member)
 					
 				case .error(let error):
-					self.logger?.log("[FAILED] Get member info failed...\n")
-					self.logger?.log("[ERROR] \(error.localizedDescription)\n")
+					log.info("[FAILED] Get member info failed...")
+					log.info("[ERROR] \(error.localizedDescription)")
                     self.login(with: token)
 				}
 			}

@@ -9,6 +9,7 @@
 import Foundation
 
 protocol MovieViewModelDelegate: AnyObject {
+	func isGoingToGetMovieSession()
     func didGetMovieSession(movieSession: MovieSession)
 }
 
@@ -47,22 +48,23 @@ class MovieViewModel: ViewModel {
 	}
 	
 	func getMovieSessions() {
-		logger?.log("[INFO] Get movie sessions...\n")
+		log.info("[INFO] Get movie sessions...\n")
+		delegate?.isGoingToGetMovieSession()
 		_ = network.getMovieSessions(with: authToken)
 			.subscribe { [weak self] (event) in
 				guard let self = self else { return }
 				switch event {
 				case .success(let movieSession):
 					guard movieSession.result == 1 else { return }
-					self.logger?.log("[SUCCESS] Get movie session success!\n")
-					self.logger?.log("============================\n\n")
+					log.info("[SUCCESS] Get movie session success!\n")
+					log.info("============================\n\n")
 					self.timer?.cancel()
 					self.timer = nil
 					self.delegate?.didGetMovieSession(movieSession: movieSession)
 					
 				case .error(let error):
-					self.logger?.log("[FAILED] Get movie session failed...\n")
-					self.logger?.log("[ERROR] \(error.localizedDescription)\n")
+					log.info("[FAILED] Get movie session failed...\n")
+					log.info("[ERROR] \(error.localizedDescription)\n")
 				}
 		}
 	}
